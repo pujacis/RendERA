@@ -1,0 +1,118 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.DocumentVM>
+@{
+    ViewData["Title"] = "UserDashboard";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int userType = (int)RendERA.Infrastructure.Enum.UserType.User;
+}
+
+
+
+<div id="content-section">
+    <div class="job-details-container">
+        <div class="row">
+            <ul class="job-details">
+                <li class="first-li">0 <br> <span style="color: gray;">Rendering jobs</span> </li>
+                <li class="seconed-li">0 <br> <span>Waiting jobs</span>   </li>
+                <li class="third-li">0 <br> <span>Completed jobs</span> </li>
+                <li class="fourth-li">0 <br> <span>Failed jobs</span> </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+    <div class="details-container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="third" style="background: #333333">
+
+                    <div class="blnce"> <h5 style="color: grey;">Balance :</h5></div>
+
+                    <h1 style="color: white;text-align: center;padding-top: 10px;">$ 0 <br> <button class="btn btn-success">Recharge Now</button></h1>
+                    <!-- 			<div class="rechargebtn">
+
+
+                                </div> -->
+                    <div class="col1">
+
+
+                        <div class="row">
+                            <div class="copun-main">
+                                <div class="col-md-6" style="border-right: 1px solid grey"> <h4> Coupon  <span style="color: orange">2</span><br><p style="padding-top: 10px; color: white;">$ 25</p></h4></div>
+                                <div class="col-md-6"><h4>Credits<br><p style="padding-top: 10px; color: white;">$ 0</p></h4></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="third" style="background: #333333">
+                    <div class="blnce"> <h5 style="color: grey;">Assets Storage :</h5></div>
+                    <div class="col2">
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="third" style="background: #333333">
+                    <div class="blnce"> <h5 style="color: grey;">Nearly one week jobs :</h5></div>
+                    <div class="col3">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+            };
+    </script>
+}
+
+<div class="modal fade" id="myNotificationModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="" style=" width: 53%; margin-left: 23%;">
+            <div class="modal-header" style=" background: #3f4041;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="Trackingbodydata" style="padding: 0 56px;background: #3f4041;">
+
+
+            </div>
+            <div class="modal-footer" style=" background: #3f4041;">
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---asset section------------>
+<!-- Trigger the modal with a button ---->
+<!-- Modal -->
+<!---Analsys section--------->
+<!--------payment--------->
+@*</div>*@
+
+
+<!------------------paymetn------end--->
+<!------------------profile----------->
+<!------------------profile------end--->
+<!--------statistics-------------->

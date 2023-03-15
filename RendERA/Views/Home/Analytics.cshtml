@@ -1,0 +1,266 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.DocumentVM>
+@{
+    ViewData["Title"] = "Analytics";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<style>
+    @@media(min-width: 992px) {
+        .my-col-1 {
+        width: 12.333333%;
+        }       
+    }
+    .btn-default {
+    color: #fffdfd;
+    background-color: #222;
+    border-color: #ccc;
+    }
+    .hover:hover {
+        background-color: white;
+        color:black;
+    }
+    .hover{
+        color:white;
+    }
+
+</style>
+    <script src="https://www.paypal.com/sdk/js?client-id=AanRzn_IIbiKBlSP1669Uy1QXy0UnBOQwiF-7R4vCjNEN4EdgOCIPhkJk7eAL0izfFRGCd_nEQ1cFzOy">
+
+    </script>
+<div id="analsys">
+    <div class="anylsiscontain">
+        <div class="row" >
+            <div class="col-md-1 my-col-1 stret">
+                <div class="check">
+                    <input type="checkbox" name=""><span><h5 style="color: white; padding-top: 10px;padding-left: 20px;"> Tracking ID</h5></span>
+                </div>
+            </div>
+
+            <div class="col-md-1 my-col-1">
+                <div class="scene">
+                    <h5 style="color: white; padding-top: 10px;padding-left: 20px;"> Scene Name</h5>
+                </div>
+            </div>
+
+            <div class="col-md-1 my-col-1">
+                <div class="status">
+                    <h5 style="color: white; padding-top: 10px;padding-left: 20px;"> Status</h5>
+                </div>
+            </div>
+
+            <div class="col-md-1 my-col-1">
+                <div class="start">
+                    <h5 style="color: white; padding-top: 10px;padding-left: 20px;"> Starting Time</h5>
+                </div>
+            </div>
+            <div class="col-md-1 my-col-1">
+                <div class="end">
+                    <h5 style="color: white; padding-top: 10px;padding-left: 20px;"> End Time</h5>
+                </div>
+            </div>
+            <div class="col-md-1 my-col-1">
+                <div class="dur">
+                    <h5 style="color: white; padding-top: 10px;padding-left: 20px;"> Duration</h5>
+                </div>
+            </div>
+            <div class="col-md-1 my-col-1">
+                <div >
+                    @*<h5 style="color: white; padding-top: 10px;padding-left: 20px;"> Parameter</h5>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="anylsiscontain" style="padding-top:9px;">
+            <div class="row"  onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                <input hidden class="parameterId" value="@item.Id" />
+                <div class="col-md-1 my-col-1 stret">
+                    <div class="check">
+                        <input type="checkbox" style="margin-top: 4px;margin-right: 8px;" name=""><span class="hover"  onclick="TrackingDetail('@item.TrackingId',@item.Id);"><a href="#" style="padding:2px 14px;"> @Html.DisplayFor(modelItem => item.TrackingId)</a></span>
+                    </div>
+                </div>
+
+                <div class="col-md-1 my-col-1"   onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                    <div class="scene">
+                        <p style=" color: white ; padding-left: 20px ; ">@Html.DisplayFor(modelItem => item.FileName)</p>
+                    </div>
+                </div>
+
+                <div class="col-md-1 my-col-1"   onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                    <div class="status">
+                        <p style=" color: white ; padding-left: 20px ; ">
+                            @RendERA.Infrastructure.Enum.GetEnumDescription((RendERA.Infrastructure.Enum.JobTrackingStatus)item.status)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-1 my-col-1"   onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                    <div class="start">
+                        <p style=" color: white ; padding-left: 20px ; "> @item.DatePosted.ToString("MM/dd/yyyy hh:mm tt")</p>
+                    </div>
+                </div>
+                <div class="col-md-1 my-col-1"   onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                    <div class="end">
+                        <p style=" color: white ; padding-left: 20px ; ">  - </p>
+                    </div>
+                </div>
+                <div class="col-md-1 my-col-1"   onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                    <div class="dur">
+                        <p style=" color: white ; padding-left: 20px ; "> - </p>
+                    </div>
+                </div>
+                <div class="col-md-1 my-col-1">
+                    <div class="">
+                        <button class="btn btn-default"  id="@item.Id" style=" padding-left: 20px ; " onclick="Details12(this.id)">Parameters</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    @if (Model == null)
+    {
+        <div class="nojobimg">
+
+        </div>
+    }
+
+
+
+
+</div>
+<div class="modal fade " id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content bodydata">
+            @*<div class="modal-header" style=" background: #3f4041;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select parameter</h4>
+            </div>
+            <div class="modal-body " style="padding: 0 56px;background: #3f4041;">
+
+
+            </div>*@
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myNotificationModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="" style=" width: 53%; margin-left: 23%;">
+            <div class="modal-header" style=" background: #3f4041;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="Trackingbodydata" style="padding: 0 56px;background: #3f4041;">
+
+
+            </div>
+            <div class="modal-footer" style=" background: #3f4041;">
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*<table style="background-color:orange; width:100%; border:solid 5px green; padding:20px;">
+
+        <tr>
+            <td align="center" style="padding:20px;">
+                <a href="javascript:void(0);" class="getAllEMP" style="font-size:20pt;">Get All Employee Inforamtion</a>
+            </td>
+        </tr>
+    </table>
+
+    <div id='myModal' class='modal' style="text-align:right; ">
+        <div class="modal-dialog" style="width:900px; height:400px; padding:10px;">
+            <div class="modal-content" style="overflow: auto; padding:10px; background-color:#d2f5f4;">
+                <button type="button" id="closbtn">x</button>
+                <div style="height:10px;"></div>
+                <div id='myModalContent' style="width:850px; height:400px; padding:10px;"></div>
+            </div>
+        </div>
+    </div>*@
+@*<script>
+        var ajaxCallURL = '/Employee/Deytai';
+        $(function () {
+            $(".getAllEMP").click(function () {
+                var $buttonClicked = $(this);
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: ajaxCallURL,
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+    </script>*@
+<script>
+    function TrackingDetail(trackingId,docId){
+        $.get(document.location.origin +'/JobTracking/GetTrackingDetails?trackingId=' + trackingId + '&docId=' + docId,
+            function (data) {
+                $('.bodydata').html(data);
+            });
+        jQuery.noConflict();
+        $("#myModal").modal("show");
+    }
+
+    function Details12(id) {
+        if (id == '0' || id == 0) {
+            var value = $("#DocumentList").val();
+            id = parseInt(value);
+        }
+        if (id == '0' || id == 0) {
+
+        }
+        else {
+              //window.location.assign('../../Parameters/AdditionalParameter?id=' + id);
+            $.get(document.location.origin +'/Parameters/SetAdditionalParameter?id=' + id,
+                function (data) {
+                    $('.bodydata').html(data);
+                });
+            jQuery.noConflict();
+            $("#myModal").modal("show");
+        }
+    }
+</script>
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+            };
+    </script>
+}
+<script>
+    function showActive() {
+        var element = document.getElementById("Analytics");
+        element.classList.add("active");
+    }
+    showActive();
+</script>

@@ -1,0 +1,299 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.DocumentVM>
+
+@{
+    ViewData["Title"] = "Index";
+    @if (ViewBag.usertype == (int)RendERA.Infrastructure.Enum.UserType.Partner)
+    {
+        Layout = "~/Views/Shared/_LayoutPartner.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+@{
+    var guid = new Guid("00000000-0000-0000-0000-000000000000");
+}
+<style>
+    option {
+        color: #000000;
+    }
+
+    .text:focus, .text:hover {
+        color: #878988;
+    }
+
+    .text {
+        color: #777777;
+    }
+</style>
+<div class="content js-content">
+    <div style="padding: 11px;" class="content_item">
+        <h2 style="color:forestgreen">Documents</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="color:forestgreen">
+                        Tracking Id
+                    </th>
+                    <th style="color:forestgreen">
+                        Uploaded By
+                    </th>
+                    <th style="color:forestgreen">
+                        Date Time
+                    </th>
+
+                    <th style="color:forestgreen">
+                        Status
+                    </th>
+                    @if ((int)RendERA.Infrastructure.Enum.UserType.Admin == ViewBag.UserType)
+                    {
+                        <th style="color:forestgreen">
+                            Assign Partner
+                        </th>
+                        <th></th>
+                    }
+                    @if ((int)RendERA.Infrastructure.Enum.UserType.Partner == ViewBag.UserType)
+                    {
+                        <th style="color:forestgreen">
+                            Assign Team
+                        </th>
+
+                        <th style="color:forestgreen">
+                            Assign Project
+                        </th>
+                        <th></th>
+                    }
+                    <th style="color:forestgreen">Download</th>
+
+                    <th style="color:forestgreen">Parameters</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="color:forestgreen" class="hover" onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                            <a style="color:forestgreen" onclick="TrackingDetail('@item.TrackingId',@item.Id);" href="#"> @item.TrackingId</a>
+                        </td>
+                        <td style="color:forestgreen">
+                            @Html.DisplayFor(modelItem => item.UploadedByName)
+                        </td>
+                        <td style="color:forestgreen">
+                            @item.DatePosted.ToString("MM/dd/yyyy hh:mm tt")
+                        </td>
+
+                        <td style="color:forestgreen">
+                            @RendERA.Infrastructure.Enum.GetEnumDescription((RendERA.Infrastructure.Enum.JobTrackingStatus)item.status)
+                        </td>
+                        @if ((int)RendERA.Infrastructure.Enum.UserType.Admin == ViewBag.UserType)
+                        {
+                            <input hidden name="documentId" value="@item.Id" />
+                            <form asp-controller="Documents" asp-action="AssignPartner" asp-route-PartnerId="@item.AssignedPartnerId" asp-route-documentId="@item.Id">
+
+                            <td style="color:forestgreen">
+                                    <select style="height:27px" asp-for="@item.AssignedPartnerId" name="PartnerId" asp-items="@item.Partners"><option value="00000000-0000-0000-0000-000000000000">select</option></select>
+                                </td>
+                            <td style="color:forestgreen">
+                                    @if (@item.AssignedPartnerId != guid)
+                                    {
+                                        <input style="padding:5px;margin:0" id="assignButton" type="submit" value="assign" />
+                                    }
+                                    else
+                                    {
+                                        <button style="padding:5px;margin:0" type="submit">Assign</button>
+                                    }
+                                </td>
+
+                            </form>
+
+                        }
+                        @if ((int)RendERA.Infrastructure.Enum.UserType.Partner == ViewBag.UserType)
+                        {
+                            <input hidden name="documentId" value="@item.Id" />
+                            <form asp-controller="Documents" id="AssignForm-@item.Id" asp-action="AssignTeamProject" asp-route-teamId="@item.DatePosted" asp-route-documentId="@item.Id">
+
+                            <td style="color:forestgreen">
+                                    <select style="height:27px;width:auto;" id="AssignedTeamId-@item.Id" asp-for="@item.AssignedTeamId" name="teamId" asp-items="@item.Teams"><option value="0">select</option></select>
+                                </td>
+                            <td style="color:forestgreen">
+                                    <select style="height:27px;width:auto;" id="AssignedProjectId-@item.Id" asp-for="@item.AssignedProjectId" name="projectId" asp-items="@item.Projects"><option value="0">select</option></select>
+                                </td>
+                            <td style="color:forestgreen">
+                                    @if (@item.AssignedTeamId != 0)
+                                    {
+                                        <input onclick="assignButton(this.id)" id="@item.Id" style="padding:5px;margin:0" type="button" value="assign" />
+                                    }
+                                    else
+                                    {
+                                        <button style="padding:5px;margin:0" type="button">Assign</button>
+                                    }
+                                </td>
+
+                            </form>
+
+                        }
+                        <td>
+                            <a style="color:forestgreen" asp-action="AdminDownload" asp-route-filename="@item.FileUploadUrl">Source file</a>
+                            @if (item.FileDownloadUrl != null)
+                            {@Html.Raw("|");
+                                <a style="color:forestgreen" asp-action="AdminDownload" asp-route-filename="@item.FileDownloadUrl">Procced file</a>
+                        }
+                        </td>
+                        <td>
+                            <a><k style="color:forestgreen" id="@item.Id" onclick="Details(this.id)" type="button">Parameters</k></a>
+                        </td>
+                        <td>
+                            @if (item.AssignedPartnerId != guid)
+                            {
+
+                                <a style="color:forestgreen" href="/Message/Index?Id=@item.MessageId">Message</a> @Html.Raw("|")
+
+                            }
+                            <a style="color:forestgreen" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            @if ((int)RendERA.Infrastructure.Enum.UserType.Partner == ViewBag.UserType)
+                            {
+                                @Html.Raw("|")
+                                <a><k style="color:forestgreen" class="text" type="button" onclick="change(@item.Id)" data-toggle="modal" data-target="#UploadModal">Upload Proceed Document</k></a>
+                            }
+                            @if ((int)RendERA.Infrastructure.Enum.UserType.Admin == ViewBag.UserType)
+                            {
+                                @Html.Raw("|")
+                                <a style="color:forestgreen" asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div id="UploadModal" class="modal fade" role="dialog" style="height: 300px !important">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style=" background: #3f4041">
+                Upload Proceed File
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="background-color: #333; height: 250px !important">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="uploadpng">
+                            <form asp-controller="Documents" asp-action="UploadTargetFile" method="post" enctype="multipart/form-data">
+                                <div class="form-group files">
+                                    <label>Upload Your File </label>
+                                    <input width="100" required type="file" name="file" class="form-control" />
+                                    <input hidden id="documnetId" name="documentId" />
+                                </div>
+                                <div class="form-group">
+
+                                </div>
+                                <input type="submit" style="padding:12px" class="btn btn-primary right" id="uploadButton" value="Upload">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="js-fake-scroll"></div>
+@*<div class="modal fade " id="myModal1" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content" style="height: auto;">
+            <div class="modal-header" style=" background: #3f4041;display:unset">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Selected parameter</h4>
+            </div>
+            <div class="modal-body bodydata" style=" background: #3f4041;">
+
+
+            </div>
+
+        </div>
+    </div>
+</div>*@
+
+<div class="modal fade " id="myModal1" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content bodydata">
+            @*<div class="modal-header" style=" background: #3f4041;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select parameter</h4>
+                </div>
+                <div class="modal-body " style="padding: 0 56px; background: #3f4041;">
+
+
+                </div>*@
+
+        </div>
+    </div>
+</div>
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+        };
+
+          function change(value){
+          document.getElementById("documnetId").value = value;
+          }
+    </script>
+}
+<script>
+    function change(value) {
+        document.getElementById("documnetId").value = value;
+    }
+    function Details(id) {
+        if (id == '0' || id == 0) {
+            var value = $("#DocumentList").val();
+            id = parseInt(value);
+        }
+        if (id == '0' || id == 0) {
+
+        }
+        else {
+            $.get(document.location.origin +'/Parameters/SetAdditionalParameter?id=' + id,
+                function (data) {
+                    $('.bodydata').html(data);
+                });
+            jQuery.noConflict();
+            $("#myModal1").modal("show");
+        }
+    }
+    function assignButton(id) {
+
+        if ($("#AssignedProjectId-" + id).val() == '0') {
+            alert("Please select Project");
+            // $('#AssignedProjectMsg').text("Please select Project");
+        }
+        else if ($("#AssignedTeamId-" + id).val() == '0') {
+            alert("Please select Team");
+            // $('#AssignedTeamMsg').text("Please select Team");
+        }
+        else {
+            $('#AssignForm-' + id).submit();
+        }
+    }
+
+</script>
+<script>
+    function TrackingDetail(trackingId, docId) {
+        $.get(document.location.origin +'/JobTracking/GetTrackingDetails?trackingId=' + trackingId + '&docId=' + docId,
+            function (data) {
+                $('.bodydata').html(data);
+            });
+        jQuery.noConflict();
+        $("#myModal1").modal("show");
+    }
+</script>

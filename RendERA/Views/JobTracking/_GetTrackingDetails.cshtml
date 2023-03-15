@@ -1,0 +1,35 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.JobLogVM>
+@{
+    ViewData["Title"] = "GetTrackingDetails";
+    Layout = null;
+}
+<div class="modal-header" style=" background: #3f4041;">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Tracking Details</h4>
+</div>
+<div class="modal-body " style="color: white;background: #3f4041;">
+    <span style="color:red" id="warningMsg"></span>
+
+    @foreach (var item in Model)
+    {
+
+            <h4>Status : @RendERA.Infrastructure.Enum.GetEnumDescription((RendERA.Infrastructure.Enum.JobTrackingStatus)item.Status)</h4>
+            <div  class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    <h4>Date : @item.CreatedDate</h4>
+                    <h4>Detail : @item.LogDetail</h4>
+                </div>
+            </div>
+    }
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.TeamVM>
+@{
+    Layout = null;
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Degination</th>
+            <th>Assign</th>
+            <th>Partner</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model)
+        {
+        <tr>
+            <td>
+                @if (team.ProfilePicture == null)
+                {
+                    <img src="~/Images/User.jpg"
+                         class="rounded-circle"
+                         height="40" width="40"
+                         asp-append-version="true" />
+                }
+                else
+                {
+                    <img src="~/ProfileImg/@team.ProfilePicture"
+                         class="rounded-circle"
+                         height="40" width="40"
+                         asp-append-version="true" />
+                }
+                @team.Name
+            </td>
+            <td>@team.Degination</td>
+            <td>@team.assignJobCount</td>
+            <td>@team.PartnerName</td>
+        </tr>
+        }
+    </tbody>
+</table>

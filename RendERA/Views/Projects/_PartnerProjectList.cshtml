@@ -1,0 +1,50 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.ProjectVM>
+@{
+    Layout = null;
+
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th style="color:forestgreen">Id</th>
+            <th style="color:forestgreen">Name</th>
+            <th style="color:forestgreen">Partner</th>
+            <th style="color:forestgreen">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model)
+        {
+        <tr>
+                <td style="color:forestgreen">
+                @team.Id
+            </td>
+                <td style="color:forestgreen">
+                @team.Name
+            </td>
+
+                <td style="color:forestgreen">@team.PartnerName</td>
+           
+
+            
+            @if ((int)RendERA.Infrastructure.Enum.Status.Completed == team.Status)
+            {
+                <td >
+                    <spam style="padding: 6px;background-color:lightblue">
+                        @Enum.GetName(typeof(RendERA.Infrastructure.Enum.Status), @team.Status)
+                    </spam>
+                </td>
+            }
+            @if ((int)RendERA.Infrastructure.Enum.Status.Inprogress == team.Status)
+            {
+                <td>
+                    <spam style="padding: 6px;background-color:lightgreen">
+                        @Enum.GetName(typeof(RendERA.Infrastructure.Enum.Status), @team.Status)
+                    </spam>
+                </td>
+            }
+
+        </tr>
+        }
+    </tbody>
+</table>

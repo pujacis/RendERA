@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>RendERA.ServiceManager</AssemblyName>
+    <RootNamespace>RendERA.ServiceManager</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PagedList.Core" Version="1.17.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RendERA.EF\RendERA.DB.csproj" />
+    <ProjectReference Include="..\RendERA.Infrastructure\RendERA.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

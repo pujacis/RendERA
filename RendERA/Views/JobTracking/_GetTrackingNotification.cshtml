@@ -1,0 +1,22 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.JobLogVM>
+@{
+    ViewData["Title"] = "_GetTrackingNotification";
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    if (item.IsRead == false) {
+        <div style="color: white;font-weight: bolder;border-bottom: 1px solid #e5e5e5;" class="row">
+            <p><b>@item.TrackingId : @item.LogDetail</b></p>
+        </div>
+     }else 
+     {        
+        <div style="color: white;border-bottom: 1px solid #e5e5e5;" class="row">
+            <p>@item.TrackingId : @item.LogDetail</p>
+        </div>
+     }
+
+
+
+}

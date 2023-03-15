@@ -1,0 +1,230 @@
+﻿@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnv
+@model RendERA.DB.ViewModels.UserRegisterationVM
+@{
+    Layout = null;
+
+    string userid = "";
+    string password = "";
+    if (hostingEnv.EnvironmentName == "Development")
+    {
+        userid = "user5@era.com";
+        password = "123456";
+    }
+}
+@{
+    int Beginner = (int)RendERA.Infrastructure.Enum.UserCategory.Beginner;
+    int Expert = (int)RendERA.Infrastructure.Enum.UserCategory.Expert;
+    int Pro = (int)RendERA.Infrastructure.Enum.UserCategory.Pro;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link href="~/css/LayoutOutside - Copy.css" rel="stylesheet" />
+    <script src="~/js/LayoutOutside.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.js" integrity="sha256-mkdmXjMvBcpAyyFNCVdbwg4v+ycJho65QLDwVE3ViDs=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <a asp-action="Login" asp-controller="Account"><button type="button">Login </button></a>
+    <div id="container">
+        <div id="inviteContainer">
+            <div id="formContainer">
+                <div class="formLeft">
+                    <img src="https://i1.wp.com/era.sa/wp-content/uploads/2020/04/RENDERERA-Logo-alpha.png?resize=1024%2C400&amp;amp;amp;amp;amp;amp;ssl=1&amp;amp;amp;amp;amp;quot;">
+                </div>
+                <div class="formRight">
+                    <!-- Forgot password form -->
+                    <form id="forgot" class="otherForm">
+                        <header>
+                            <h1>Forgot Password</h1>
+                            <p>Seems like your password is missing</p>
+                        </header>
+                        <section>
+                            <label>
+                                <p>Email</p>
+                                <input type="email" placeholder=" ">
+                                <div class="border"></div>
+                            </label>
+                            <button type="submit">Send email</button>
+                        </section>
+                        <footer>
+                            <button type="button" class="forgotBtn">Back</button>
+                        </footer>
+                    </form>
+
+                    <!-- Login form -->
+                    <form id="login" action="PartnerLogin" method="post">
+                        <header>
+                            <h1>Admin&Partners </h1>
+                            <p>Login to continue</p>
+                        </header>
+                        <section>
+                            <label>
+                                <p>Email</p>
+                                <input type="email" required="" name="UserName" value="@userid" />
+                                <div class="border"></div>
+                            </label>
+                            <label>
+                                <p>Password</p>
+                                <input type="password" required="" name="Password" value="@password" />
+                                <div class="border"></div>
+                            </label>
+                            <button class="acceptBtn" type="submit">Login</button>
+                            <p style="color:red;">@ViewBag.Msg</p>
+                        </section>
+                        <footer>
+                            <button type="button" class="forgotBtn">Forgot password?</button>
+                            <button type="button" class="registerBtn">Need an account? Register</button>
+                        </footer>
+                    </form>
+
+                    <!-- Register form -->
+                    <form id="register" class="otherForm" method="post" action="Register" style="padding: 0 0 0 11px;">
+                        <div style="overflow-y: auto;
+                        overflow-x: hidden;
+                        overflow-y: auto;">
+
+                            <header>
+                                <h1>Become a Partner</h1>
+                                <p>Register for new business with RendERAfarm</p>
+                            </header>
+                            <section>
+                                @if (!String.IsNullOrEmpty(ViewBag.Errmsg))
+                                {
+                                    <script>
+                                        $('#register, #formContainer').toggleClass('toggle');
+                                    </script>
+                                    <p style="color:red;">@ViewBag.Errmsg</p>
+                                    <div class="border"></div>
+                                }
+                                <input type="hidden" id="userType" name="UserType" asp-for="UserType" />
+                                <label>
+                                    <p>Username</p>
+                                    <input required type="text" placeholder=" " name="UserName" maxlength="15" asp-for="UserName">
+                                    <div class="border"></div>
+                                </label>
+                                <label>
+                                    <p>Email</p>
+                                    <input required type="email" placeholder=" " name="Email" maxlength="30" asp-for="Email">
+                                    <div class="border"></div>
+                                </label>
+                                <label>
+                                    <p>Phone(optional)</p>
+                                    <input type="text" placeholder="10 digit phone number startring +CCode " pattern="[0-9]{10}" name="Phone" maxlength="10" asp-for="Phone">
+                                    <div class="border"></div>
+                                </label>
+                                <label>
+                                    <p>Company</p>
+                                    <input type="text" placeholder=" ">
+                                    <div class="border"></div>
+                                </label>
+                                <label>
+                                    <p>address</p>
+                                    <input type="text" placeholder=" ">
+                                    <div class="border"></div>
+                                </label>
+                                <label>
+                                    <p>PostsCode</p>
+                                    <input type="text" placeholder=" ">
+                                    <div class="border"></div>
+                                </label>
+
+                                <label>
+                                    <p>Country</p>
+                                    <input type="text" placeholder=" ">
+                                    <div class="border"></div>
+                                </label>
+                                <label>
+                                    <p>Password</p>
+                                    <input type="password" id="txtNewPassword" placeholder=" " required name="Password" maxlength="15">
+                                    <div class="border"></div>
+                                </label>
+                                <label>
+                                    <p>Repeat Password</p>
+                                    <input type="password" id="txtConfirmPassword" placeholder=" " required name="repeatPassword" maxlength="15">
+                                    <div class="border"></div>
+                                </label>
+
+                                <p style="color:green" id="validate-status"></p>
+                                <button id="RegestrationButtonClick" type="submit">Register</button>
+                            </section>
+                            <footer>
+                                <button type="button" class="registerBtn">Back</button>
+                            </footer>
+                            <br /><br /><br />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#userType").val(2);
+        $('#RegestrationButtonClick').attr('disabled', false);
+        $(document).ready(function () {
+            $("#txtConfirmPassword").keyup(validate);
+        });
+
+
+        function validate() {
+            var password1 = $("#txtNewPassword").val();
+            var password2 = $("#txtConfirmPassword").val();
+
+
+
+            if (password1 == password2) {
+
+                $('#RegestrationButtonClick').attr('disabled', false);
+                $("#validate-status").text("");
+            }
+            else {
+
+                $('#RegestrationButtonClick').attr('disabled', true);
+                $("#validate-status").text("Passwords do not match!");
+            }
+
+        }
+       
+
+        $("#forgetPassword").click(function () {
+            var email = $("#ForgetemailId").val();
+            $.get(document.location.origin +"/Account/ForgetPassword?email=" + email + "&userType=2", function (data) {
+                $("#validate-status-forgetemail").text(data.message);
+            });
+        });
+
+
+
+
+        function RegestrationButtonClick (e) {
+
+            var radioValue = $("input[name='UserCategory']:checked").val();
+            if (radioValue == null) {
+                msg += "Please select Level"
+            }
+            var msg = '';
+            var radioValue = $("input[name='UserCategory']:checked").val();
+
+            if(radioValue == null) {
+                msg = "Please select Level";
+            }
+            else if($('input[name="Password"]').val() != $('input[name="repeatPassword"]').val()) {
+                msg += 'Password and Repeat Password not match';
+            }
+            if (msg != '') {
+                alert(msg);
+                return false;
+             }
+            else {
+                $("#register").submit();
+             }
+        }
+
+                 
+
+    </script>
+
+
+</body>
+</html>

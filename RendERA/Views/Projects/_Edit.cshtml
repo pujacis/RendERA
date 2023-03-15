@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "EditProject";
+    Layout = null;
+}
+@model RendERA.DB.ViewModels.ProjectVM
+
+<h2 style="padding: 8px;color:forestgreen">Edit Project</h2>
+<form id="ProjectForm" enctype="multipart/form-data" asp-action="EditProject">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input asp-for="Id" hidden />
+                <label asp-for="Name" style="color:forestgreen" class="col-md-2 control-label"></label>
+                <input asp-for="Name" class="col-md-4 msgForm" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Status" style="color:forestgreen" class="col-md-2 control-label"></label>
+                <select  class="col-md-4" asp-for="Status" id="StatusList" asp-items="@Model.StatusList"></select>
+                <span asp-validation-for="Status" id="statusmsg" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input style="padding: 8px;" class="btn bt-danger right"  type="submit" value="submit" />
+        <a asp-action="Index"><button style="padding: 8px;" type="button"><i class=""></i> Back to List</button></a>
+
+    </div>
+</form>
+<div class="js-fake-scroll"></div>
+<script type="text/javascript">
+
+    function backToList() {
+        window.location.assign(document.location.origin +'/Projects');
+    };pe
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+   $('#ProjectSubmitbutton').click(function () {
+        if ($("#StatusList").val() == '0') {
+            $('#statusmsg').text("Please select Status");
+        }
+        else {
+           $('#ProjectForm1').submit();
+        }
+    });
+    
+</script>

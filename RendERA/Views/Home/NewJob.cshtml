@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewData["Title"] = "NewJob";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@{
+    var Arnold = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Arnold;
+    var Blender = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Blender;
+    var Cinema4D = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Cinema4D;
+    var Clarisse = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Clarisse;
+    var Nuke = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Nuke;
+    var Maya = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Maya;
+    var VR = (int)RendERA.Infrastructure.Enum.RenderaSoftware.VR;
+    var ThreeDMax = (int)RendERA.Infrastructure.Enum.RenderaSoftware.ThreeDMax;
+
+}
+<style>
+    .activeSoftware {
+        color:white;
+    }
+</style>
+
+<div @*id="mymodal" class="modal fade" role="dialog"*@>
+
+</div>
+
+<div id="newjob">
+    @*<div id="myModal" class="modal fade" role="dialog">*@
+    <div id="myModal1" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style=" background: #3f4041;height: 58px;">
+                    <button type="button" class="close" data-dismiss="modal">@*&times;*@</button>
+                    <h4 class="modal-title" style=" color: white;">Select Render File</h4>
+                </div>
+                <div class="modal-body" style="    background-color: #333;height:400px ">
+                    <div class="row">
+
+                        <div class="col-md-3 leftlist">
+                            <ul id="activeSoftwareList">
+                                <li type="button" value="Maya" onclick="softwareType(@Maya)"><img src="/images/maya.png" width="15" height="15">&nbsp; Maya</li>
+                                <li type="button" value="ThreeDMax" Onclick="softwareType(@ThreeDMax)"><img src="/images/max.png" width="15" height="15">&nbsp; 3D Max</li>
+                                <li type="button" value="Arnold" Onclick="softwareType(@Arnold)"><img src="/images/Houdini.png" width="15" height="15">&nbsp; Houdini</li>
+                                <li type="button" value="Cinema4D" Onclick="softwareType(@Cinema4D)"><img src="/images/cinema-4D.png" width="15" height="15">&nbsp; Cinema 4D</li>
+                                <li type="button" value="Blender" Onclick="softwareType(@Blender)"><img src="/images/blender.png" width="15" height="15">&nbsp; Blender</li>
+                                <li type="button" value="VR" Onclick="softwareType(@VR)"><img src="/images/vray.png" width="15" height="15">&nbsp; VR Standalone</li>
+                                <li type="button" value="Nuke" Onclick="softwareType(@Nuke)"><img src="/images/nuke.png" width="15" height="15">&nbsp; Nuke</li>
+                                <li type="button" value="Clarisse" Onclick="softwareType(@Clarisse)"><img src="/images/clarisse.png" width="15" height="15">&nbsp; Clarisse</li>
+                            </ul>
+
+                        </div>
+
+                        <div class="col-md-9">
+                            <span id="documentmsg" style="color:red"></span>
+                            @*<button class="">/</button>*@
+                            <select style="width: 100%;" id="DocumentList" name="documentId" class="accordion">
+                            </select>
+
+                            <div class="panel ">
+                                <div class="forfile">
+                                </div>
+                                <div class="forfiletext">
+                                    <p>No project directory</p>
+                                    <p>Please go to <span style="color: #13cb75;">Assets </span> ,create directory and upload all needed assets</p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="uploadpng">
+                            </div>
+
+                            <div class="uploadform">
+                            </div>
+                        </div>
+                        <div class="btn-text">
+                            <button type="button" id="DocumentParameterbutton" class="btn btn-default" onclick="Details1(0)" data-toggle="modal" data-target="#toModal">Continue</button>
+                            <h5>Selected <span style=" font-size: 22px; color: #13cb75;">0</span> scene file</h5>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content bodydata">
+            @*<div class="modal-header" style=" background: #3f4041;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select parameter</h4>
+                </div>
+                <div class="modal-body " style="padding: 0 56px; background: #3f4041;">
+
+
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myNotificationModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="" style=" width: 53%; margin-left: 23%;">
+            <div class="modal-header" style=" background: #3f4041;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="Trackingbodydata" style="padding: 0 56px;background: #3f4041;">
+
+
+            </div>
+            <div class="modal-footer" style=" background: #3f4041;">
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="toModal" class="modal fade" role="dialog" style="height: 350px !important;overflow-y: hidden;">*@
+
+<script>
+        function softwareType(value) {
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetDocumentListBySoftwareType?id=" + value,
+                data: "{}",
+                success: function (data) {
+                    var s = '';
+                    for (var i = 0; i < data.length; i++) {
+                        s += '<option value="' + data[i].value + '">' + data[i].text + '</option>';
+                    }
+                    $("#DocumentList").html(s);
+                }
+            });
+    }
+
+    function activeSoftware(){
+        $("#activeSoftwareList li").on("click", function () {
+            $("#activeSoftwareList li").removeClass("activeSoftware");
+            $(this).addClass("activeSoftware");
+        });
+    }
+    document.onreadystatechange = function () {
+        if (document.readyState === "complete") {
+
+        softwareType(@Maya);
+            activeSoftware();
+            $("#activeSoftwareList li:first").addClass("activeSoftware");
+        }
+        else {
+            window.onload = function () {
+
+                softwareType(@Maya);
+                activeSoftware();
+                $("#activeSoftwareList li:first").addClass("activeSoftware");
+            };
+        };
+    }
+    function change(value) {
+        document.getElementById("DocumentId").value = value;
+    }
+
+    function Details1(id) {
+        if (id == '0' || id == 0) {
+            var value = $("#DocumentList").val();
+            id = parseInt(value);
+        }
+        if (id == '0' || id == 0) {
+
+        }
+        else {
+            $.get(document.location.origin +'/Parameters/SetAdditionalParameter?id=' + id,
+                function (data) {
+                    $('.bodydata').html(data);
+                });
+            jQuery.noConflict();
+            $("#myModal").modal("show");
+        }
+    }
+
+    function showActive() {
+        var element = document.getElementById("new-job");
+        element.classList.add("active");
+    }
+    showActive();
+
+</script>
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+            };
+    </script>
+}
+
+<script>
+</script>

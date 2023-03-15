@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+<style>
+    .msgForm {
+        text-align: unset !important;
+    }
+
+    .Addbutton:hover {
+        background-color: #ffffff;
+        color: #292929;
+    }
+
+    .Addbutton {
+        width: 76PX;
+        padding: 8px;
+        display: inline-block;
+        position: relative;
+        border: 2px solid #ffffff;
+        background-color: transparent;
+        color: #ffffff;
+        font-size: 1em;
+        font-family: "Roboto", sans-serif;
+        line-height: 12px;
+        letter-spacing: 0px;
+        cursor: pointer;
+        margin: 0;
+        margin-bottom: 3px;
+        white-space: nowrap;
+        -webkit-transition: all 0.3s ease-out;
+    }
+</style>
+<div class="content js-content">
+    <div style="padding: 11px;width:100%;" class="content_item">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="col-md-2"  style="color:forestgreen" >Select Partner</label>
+                    <select id="PartnerListChange" class="col-md-4  filled">
+                        <option value="0" style="color:forestgreen"> Select </option>
+                        @foreach (var obj in ViewBag.PartnerList)
+                        {
+                            <option value="@obj.UserId"  style="color:forestgreen"> @obj.user</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input style="padding: 8px; color:forestgreen" onclick="SubmitFilterForm()" class="btn bt-danger right" type="submit" value="submit" />
+        </div>
+    </div>
+
+    <div style="padding: 11px;width:100%" class="content_item" id="PartnerTeamList">
+       
+    </div>
+</div>
+<div class="js-fake-scroll"></div>
+<script>
+    function SubmitFilterForm() {
+        var para = $("#PartnerListChange").val();
+        $.get('/Projects/PartnerProjectList?userId=' + para,
+            function (data) {
+                $("#PartnerTeamList").html(data);
+            });
+    }
+    SubmitFilterForm();
+</script>
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+            };
+    </script>
+}

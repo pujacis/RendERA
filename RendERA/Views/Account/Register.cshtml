@@ -1,0 +1,98 @@
+﻿@model RendERA.DB.ViewModels.UserRegisterationVM
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_LayoutOutside";
+
+    //Layout = null;
+}
+@{
+    int Beginner=  (int)RendERA.Infrastructure.Enum.UserCategory.Beginner;
+    int Expert = (int)RendERA.Infrastructure.Enum.UserCategory.Expert;
+    int Pro = (int)RendERA.Infrastructure.Enum.UserCategory.Pro;
+}
+<form id="register" class="otherForm" method="post" action="Register">
+    <header>
+        <h1>Become a Pro</h1>
+        <p>Register to gain full access To Renderfarm</p>
+    </header>
+    <section>
+        @if (!String.IsNullOrEmpty(ViewBag.Errmsg))
+        {
+            <label>
+                <p style="color:red;">@ViewBag.Errmsg</p>
+                <div class="border"></div>
+            </label>
+        }
+        <label>
+            <input type="hidden" name="UserType" asp-for="UserType" />
+            <p>Username</p>
+            <input required type="text" placeholder=" " name="UserName" maxlength="15" asp-for="UserName">
+            <div class="border"></div>
+        </label>
+        <label>
+            <p>Email</p>
+            <input required type="email" placeholder=" " name="Email" maxlength="30" asp-for="Email">
+            <div class="border"></div>
+        </label>
+        <label>
+            <p>Phone(optional)</p>
+            <input type="text" placeholder="10 digit phone number startring +CCode " pattern="[0-9]{10}" name="Phone" maxlength="10" asp-for="Phone">
+            <div class="border"></div>
+        </label>
+        <label>
+            <p>Password</p>
+            <input required type="password" placeholder=" " name="Password" maxlength="15">
+            <div class="border"></div>
+        </label>
+        <label>
+            <p>Repeat Password</p>
+            <input required type="password" placeholder=" " name="repeatPassword" maxlength="15">
+            <div class="border"></div>
+        </label>
+        @if (Model.UserType == (int)RendERA.Infrastructure.Enum.UserType.User) { 
+        <label>
+            <p>Level</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <input asp-for="UserCategory" type="radio" value="@Beginner" />@RendERA.Infrastructure.Enum.UserCategory.Beginner
+                    <input asp-for="UserCategory" type="radio" value="@Expert" />@RendERA.Infrastructure.Enum.UserCategory.Expert
+                    <input asp-for="UserCategory" type="radio" value="@Pro">@RendERA.Infrastructure.Enum.UserCategory.Pro
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+        </label>
+        }
+        
+        <button type="submit">Register</button>
+    </section>
+    <footer>
+        <button type="button" onclick=" window.location.assign('Login');" class="registerBtn">Back</button>
+    </footer>
+</form>
+
+<script type="text/javascript">
+
+    $('form').submit(function (e) {
+        // e.preventDefault();
+
+        var msg = '';
+        
+       var radioValue = $("input[name='UserCategory']:checked").val();
+        if (radioValue == null) {
+            msg+= "Please select Level"
+        }
+        if ($('input[name="Password"]').val() != $('input[name="repeatPassword"]').val()) {
+            msg += 'Password and Repeat Password not match';
+        }
+        if (msg != '') {
+            alert(msg);
+            return false;
+        }
+        else {
+            return true;
+        }
+    });
+</script>

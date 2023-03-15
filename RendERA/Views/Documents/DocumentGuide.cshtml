@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    @if (ViewBag.usertype == (int)RendERA.Infrastructure.Enum.UserType.Partner)
+    {
+        Layout = "~/Views/Shared/_LayoutPartner.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+<style>
+    ul {
+        list-style: none;
+    }
+</style>
+
+
+<div class="content js-content">
+
+    <div style="padding: 42px;width:100%;" class="content_item">
+        <div class="row" style="border-bottom: solid 2px; color:white" >
+            <h2><i class="material-icons" style="padding-right:8px ">library_books</i>Explore Topics</h2>
+            <p></p>
+        </div>
+
+        <div class="row" style="padding-top:2%;">
+            <div class="col-md-4">
+                <h3><i class="material-icons" style="padding-right:8px;color:white">filter_1</i>Indroduction</h3>
+                <ul>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to use the documentation.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to find topics.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>What is Included and why?</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>Basic Knowledge requirement.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>next steps.</li></a>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3><i class="material-icons" style="padding-right:8px;color:white">filter_2</i>Installation & Activation</h3>
+                <ul>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to use the documentation.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to find topics.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>What is Included and why?</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>Basic Knowledge requirement.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>next steps.</li></a>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3><i class="material-icons" style="padding-right:8px;color:white">filter_3</i>Import & Export</h3>
+                <ul>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to use the documentation.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to find topics.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>What is Included and why?</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>Basic Knowledge requirement.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>next steps.</li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h3><i class="material-icons" style="padding-right:8px;color:white">filter_4</i>Setup & Configurations</h3>
+                <ul>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to use the documentation.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to find topics.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>What is Included and why?</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>Basic Knowledge requirement.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>next steps.</li></a>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3><i class="material-icons" style="padding-right:8px;color:white">filter_5</i>API Guidelines</h3>
+                <ul>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to use the documentation.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>How to find topics.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>What is Included and why?</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>Basic Knowledge requirement.</li></a>
+                    <a asp-action="DownloadGuide" asp-controller="Documents" asp-route-filename=""><li><i style="padding-right:8px;" class="fa fa-file"></i>next steps.</li></a>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="js-fake-scroll"></div>
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+        };
+
+    </script>
+}

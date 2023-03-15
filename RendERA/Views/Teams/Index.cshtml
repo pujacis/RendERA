@@ -1,0 +1,153 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.TeamVM>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutPartner.cshtml";
+}
+<style>
+    .msgForm {
+        text-align: unset !important;
+    }
+
+    .Addbutton:hover {
+        background-color: #ffffff;
+        color: #292929;
+    }
+
+    .Addbutton {
+        width: 76PX;
+        padding: 8px;
+        display: inline-block;
+        position: relative;
+        border: 2px solid #ffffff;
+        background-color: transparent;
+        color: #ffffff;
+        font-size: 1em;
+        font-family: "Roboto", sans-serif;
+        line-height: 12px;
+        letter-spacing: 0px;
+        cursor: pointer;
+        margin: 0;
+        margin-bottom: 3px;
+        white-space: nowrap;
+        -webkit-transition: all 0.3s ease-out;
+    }
+</style>
+<div class="content js-content">
+    <div style="padding: 11px;width:100%;display:none" class="content_item" id="CreateModal">
+    </div>
+    <div style="padding: 11px;width:100%" class="content_item">
+        <input type="button" onclick="Add()" class="Addbutton btn bt-danger right fa fa-plus" value=" Add">
+         <table class="table">
+            <thead>
+                <tr>
+                    <th style="color:forestgreen">Name</th>
+                    <th style="color:forestgreen">Degination</th>
+                    <th style="color:forestgreen">Assign</th>
+                    <th style="color:forestgreen">Edit</th>
+                    <th style="color:forestgreen">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var team in Model)
+                {
+                    <tr>
+                        <td style="color:forestgreen">
+                            @if (team.ProfilePicture == null)
+                            {
+                                <img src="~/Images/User.jpg"
+                                     class="rounded-circle"
+                                     height="40" width="40"
+                                     asp-append-version="true" />
+                            }
+                            else
+                            {
+                                <img src="~/ProfileImg/@team.ProfilePicture"
+                                     class="rounded-circle"
+                                     height="40" width="40"
+                                     asp-append-version="true" />
+                            }
+                            @team.Name
+                        </td>
+                        <td style="color:forestgreen" >@team.Degination</td>
+                        <td style="color:forestgreen">@team.assignJobCount</td>
+                        <td style="color:forestgreen"><a id="@team.Id" onclick="Edit(this.id)">Edit</a></td>
+                        <td style="color:forestgreen"><a onclick="change(@team.Id)" data-toggle="modal" data-target="#toModal">Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div id="toModal" class="modal fade" role="dialog" style="height: 200px !important">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style=" background: #3f4041">
+                Are you want delete ?
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body " style="background-color: #333; height: 250px !important">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="uploadpng">
+                            <form asp-controller="Teams" id="" asp-action="DeleteTeam" method="post" enctype="multipart/form-data">
+                                <input type="hidden" id="teamId" name="id" />
+                                <input type="submit" style="padding: 8px;" class="btn bt-danger right" value="Delete">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade " id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style=" background: #3f4041;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select parameter</h4>
+            </div>
+            <div class="modal-body bodydata" style=" background: #3f4041;">
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="js-fake-scroll"></div>
+<script>
+    function change(value) {
+        document.getElementById("teamId").value = value;
+    }
+
+    function Edit(id) {
+        $("#CreateModal").css("display", "block")
+        $.get('Teams/EditTeam?id=' + id,
+            function (data) {
+                $("#CreateModal").html(data);
+            });
+    }
+    function Add() {
+        $("#CreateModal").css("display", "block");
+        $(".Addbutton").css("display", "none");
+        $.get('Teams/CreateTeam',
+            function (data) {
+                $('#CreateModal').html(data);
+            });
+    }
+
+</script>
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+            };
+    </script>
+}

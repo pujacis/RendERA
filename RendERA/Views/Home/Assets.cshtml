@@ -1,0 +1,210 @@
+﻿@{
+    ViewData["Title"] = "Assets";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+}
+@{
+    var guid = new Guid("00000000-0000-0000-0000-000000000000");
+}
+<style>
+    .hover:hover {
+    background-color:white;
+    color:black;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/7   s/jquery/3.3.1/jquery.min.js"></script>
+<div id="assets">
+    <div class="upload">
+        <div class="row">
+            <div class="col-md-4 input">
+                <h5 style="color: grey; padding-top: 10px;">Uploading Notes <i class="fa fa-exclamation-circle" aria-hidden="true"></i></h5>
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-5 uptput">
+                <button class="btn btn-success input">Input</button>
+                <button class="btn btn-success output">Output</button>
+            </div>
+        </div>
+    </div>
+    <form id="target" asp-controller="Documents" asp-action="UploadFile" method="post" enctype="multipart/form-data">
+        <input style="width: 230px; display :none" id="file-input" required type="file" name="file" class="form-control">
+    </form>
+    <div class="cont icohei">
+        <div class="row" style="height: 50px;">
+            <div class="col-md-8">
+                <div class="icondiv">
+                    <ul>
+                        <li><i type="button" id="button" class="fa fa-upload" aria-hidden="true"></i> </li>
+                        <li> <i class="fa fa-folder-open" aria-hidden="true"></i> </li>
+                        <li> <i class="fa fa-file" aria-hidden="true"></i> </li>
+                        <li> <i class="fa fa-download" aria-hidden="true"></i> </li>
+                        <li> <i class="fa fa-arrows" aria-hidden="true"></i> </li>
+                        <li> <i class="fa fa-copy" aria-hidden="true"></i> </li>
+                        <li> <i class="fa fa-pencil-square" aria-hidden="true"></i> </li>
+                        <li> <i class="far fa fa-file-archive-o" aria-hidden="true"></i> </li>
+                        <li> <i class="fa fa-trash" aria-hidden="true"></i> </li>
+                        <button class="btn btn-success">Keep local path</button>
+                    </ul>
+                    <div class="icondiv" style="color: white;"> </div>
+                </div>
+                <div class="forhide">
+                    <ul>
+                        <li> <i class="fa fa-download" aria-hidden="true"></i> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="searchdiv ">
+                    <div class="pull-right myi">
+                        <input type="text" name="search" id="SearchByTrackId" placeholder="Search by Tracking Id"> <button><i class="fa fa-search" aria-hidden="true"></i></button><br> <p style="color: #fffdfd5c;padding-left: 92px;">Already Loaded ,total 0</p>
+                        @*<input type="text" name="search" placeholder="Search in Current Directory"> <button><i class="fa fa-search" aria-hidden="true"></i></button><br> <p style="color: #fffdfd5c;padding-left: 92px;">Already Loaded ,total 0</p>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rootdir">
+        <p>Root directory</p>
+    </div>
+    <div class="" style="overflow: hidden;color: white;">
+        <div style="padding: 11px;" class="content_item" id="userDocumentList">
+            
+        </div>
+    </div>
+    <div class="pdiv">
+
+    </div>
+</div>
+<div class="modal fade " id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content bodydata">
+            @*<div class="modal-header" style=" background: #3f4041;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select parameter</h4>
+                </div>
+                <div class="modal-body " style="padding: 0 56px;background: #3f4041;">
+
+
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myNotificationModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="" style=" width: 53%; margin-left: 23%;">
+            <div class="modal-header" style=" background: #3f4041;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="Trackingbodydata" style="padding: 0 56px;background: #3f4041;">
+
+
+            </div>
+            <div class="modal-footer" style=" background: #3f4041;">
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+            };
+    </script>
+}
+<script>
+    //let span = document.getElementsByClassName("assests");
+    //let classes = span.classList;
+    //classes.add("active");
+    //span.textContent = classes;
+    //function Edit(id) {
+    // //   $("#CreateModal").css("display", "block")
+    //    $.get('/Home/GetListofUserDocument?filter=' + filter,
+    //        function (data) {
+    //            $("#userDocumentList").html(data);
+    //        });
+    //}
+
+     document.onreadystatechange = function () {
+        if (document.readyState === "complete") {
+
+            $("#SearchByTrackId").keyup(function (e) {
+
+             $.get('/Home/GetListofUserDocument?filter=' + $("#SearchByTrackId").val(),
+            function (data) {
+                $("#userDocumentList").html(data);
+            });
+    });
+
+    function Doclist() {
+        $.get('/Home/GetListofUserDocument?filter=0',
+            function (data) {
+                $("#userDocumentList").html(data);
+            });
+    }
+    Doclist();
+        }
+        else {
+            window.onload = function () {
+
+                $("#SearchByTrackId").keyup(function (e) {
+
+                   $.get('/Home/GetListofUserDocument?filter=' + $(this).val(),
+            function (data) {
+                $("#userDocumentList").html(data);
+            });
+    });
+
+    function Doclist() {
+        $.get('/Home/GetListofUserDocument?filter=0',
+            function (data) {
+                $("#userDocumentList").html(data);
+            });
+    }
+    Doclist();
+                $("#activeSoftwareList li:first").addClass("activeSoftware");
+            };
+        };
+    }
+
+    //$("#SearchByTrackId").keyup(function () {
+
+    //    $.get('/Home/GetListofUserDocument?filter=' + filter,
+    //        function (data) {
+    //            $("#userDocumentList").html(data);
+    //        });
+
+    //});
+
+    function showActive() {
+        var element = document.getElementById("assests");
+        element.classList.add("active");
+    }
+    showActive();
+    //var element = document.getElementsByClassName("assests");
+    //element.classList.add("active");
+
+    function TrackingDetail(trackingId, docId) {
+        $.get(document.location.origin +'/JobTracking/GetTrackingDetails?trackingId=' + trackingId + '&docId=' + docId,
+            function (data) {
+                $('.bodydata').html(data);
+            });
+        jQuery.noConflict();
+        $("#myModal").modal("show");
+    }
+</script>

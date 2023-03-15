@@ -1,0 +1,247 @@
+﻿@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+@model RendERA.DB.ViewModels.ParametersVM
+<style>
+    .msgForm {
+        text-align: unset !important;
+    }
+     option {
+        color:black;
+    }
+</style>
+
+    <div>
+        <form asp-action="InsertParameter" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+            <div class="panel-body">
+                <div class="form-horizontal container">
+                    <div class="form-column col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class=" col-sm-2  control-label"> category & plugin</label>
+                            <div class="col-sm-4">
+                                <select style="height:27px" asp-for="Category" id="CategoryId" asp-items="@Model.CategoryList"></select>
+                                <span asp-validation-for="Category" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row " id="ParameterUserCategoryValueRow" >
+                            <label class=" col-sm-2  control-label">User type :</label>
+                             <div class="col-sm-10">
+                                @for (int i = 0; i < Model.UserCategoryList.Count(); i++)
+                                {
+                                    <input style="padding: 0 0" val="@Model.UserCategoryList[i].Id" class="list" asp-for="UserCategoryList[i].Selected" type="checkbox" />
+                                    <span style="padding: 0 25px 0 5px">@Model.UserCategoryList[i].Name</span>
+
+                                    <input asp-for="UserCategoryList[i].Name" hidden />
+                                    <input asp-for="UserCategoryList[i].Id" hidden />
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group row " id="ParameterSoftwareValueRow" >
+                            <label class=" col-sm-2  control-label">Render Software type:</label>
+                             <div class="col-sm-10">
+                                @for (int i = 0; i < Model.RenderSoftwareList.Count(); i++)
+                                {
+
+                                    <input style="padding: 0 0" val="@Model.RenderSoftwareList[i].Id" class="list" asp-for="RenderSoftwareList[i].Selected" type="checkbox" />
+                                    <span style="padding: 0 25px 0 5px">@Model.RenderSoftwareList[i].Name</span>
+
+                                    <input asp-for="RenderSoftwareList[i].Name" hidden />
+                                    <input asp-for="RenderSoftwareList[i].Id" hidden />
+                                }
+                             </div>
+                        </div>
+
+                        <div class="form-group row" id="ParameterNameRow">
+                            <label id="ParamaterLabelName" class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Name" type="text" id="ParameterName" class="msgForm" />
+
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <input hidden asp-for="Name" type="text" id="SetParameterName" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row" id="ParameterValueRow">
+                            <label class=" col-sm-2  control-label">Value (If any)</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Value" type="text" class="msgForm" />
+
+                                <span asp-validation-for="Value" class="text-danger"></span>
+                                <input hidden asp-for="Value" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row" id="ParameterPriceRow">
+                            <label asp-for="Price" id="ParamaterPriceLabelName" class="col-sm-2 control-label">Price</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Price" pattern="^\d*(\.\d{0,2})?$" id="txtQty" class="msgForm" />
+
+
+                                <span asp-validation-for="Price" class="tex-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <input type="submit" value="Save" class=" " />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+<div class="js-fake-scroll"></div>
+@{
+    int cpu = (int)RendERA.Infrastructure.Enum.Category.CPU;
+    int twoCpu = (int)RendERA.Infrastructure.Enum.Category.CPU2X;
+    int RenderTimeOfFrame = (int)RendERA.Infrastructure.Enum.Category.RenderTimeOfFrame;
+    int NodesForProjectRederding = (int)RendERA.Infrastructure.Enum.Category.NodesForProjectRenderding;
+    int AdditionalParameter = (int)RendERA.Infrastructure.Enum.Category.AdditionalParameter;
+    int CouponCode = (int)RendERA.Infrastructure.Enum.Category.CouponCode;
+}
+<script>
+    $(document).on('keydown', 'input[pattern]', function (e) {
+        var input = $(this);
+        var oldVal = input.val();
+        var regex = new RegExp(input.attr('pattern'), 'g');
+
+        setTimeout(function () {
+            var newVal = input.val();
+            if (!regex.test(newVal)) {
+                input.val(oldVal);
+            }
+        }, 0);
+    });
+
+    
+    $('#ParameterName').keypress(function() {
+        var Input = this.value;
+        $("#SetParameterName").val(Input);
+    });
+
+     $('#CategoryId').change(function () {
+        var categoryvalue = $(this).val(); 
+            if (categoryvalue == @twoCpu) {
+           $("#ParameterNameRow").css("display", "flex");
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+            $("#ParameterName").val("");
+        }
+        if (categoryvalue == @cpu) {
+           $("#ParameterNameRow").css("display", "flex");
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+            $("#ParameterName").val("");
+        }
+        if (categoryvalue == @RenderTimeOfFrame) {
+           $("#ParameterNameRow").css("display", "none");
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+            $("#ParameterName").val("Frame per Second");
+        }
+        if (categoryvalue == @NodesForProjectRederding) {
+            $("#ParameterNameRow").css("display", "none");
+            $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+            $("#ParameterName").val("One Node");
+         }
+         if (categoryvalue == @AdditionalParameter){
+             $("#ParameterValueRow").css("display", "flex");
+             $("#ParameterSoftwareValueRow").css("display", "flex");
+             $("#ParameterUserCategoryValueRow").css("display", "flex");
+             $("#ParameterPriceRow").css("display", "none");
+              $("#ParameterName").val("");
+         }
+         if (categoryvalue == @CouponCode) {
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+             $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterNameRow").css("display", "flex");
+             $("#ParamaterLabelName").text("Coupon Code");
+             $("#ParamaterPriceLabelName").text("Discount(%)");
+             $("#txtQty").attr("pattern","^100$|^100.00$|^\\d{0,2}(\\.\\d{0,2})?$");
+             $("#ParameterName").val("");
+         }
+         else {
+             $("#ParamaterLabelName").text("Name");
+             $("#ParamaterPriceLabelName").text("Price");
+            $("#txtQty").attr("pattern", "^\\d*(\\.\\d{0,2})?$");
+         }
+      //   
+      });
+    $( document ).ready(function() {
+        var categoryvalue = $("#CategoryId").val(); 
+          if (categoryvalue == @twoCpu) {
+           $("#ParameterNameRow").css("display", "flex");
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+            $("#ParameterName").val("");
+        }
+        if (categoryvalue == @cpu) {
+           $("#ParameterNameRow").css("display", "flex");
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+            $("#ParameterName").val("");
+        }
+        if (categoryvalue == @RenderTimeOfFrame) {
+           $("#ParameterNameRow").css("display", "none");
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+            $("#ParameterName").val("Frame per Second");
+        }
+        if (categoryvalue == @NodesForProjectRederding) {
+            $("#ParameterNameRow").css("display", "none");
+            $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+            $("#ParameterName").val("One Node");
+         }
+         if (categoryvalue == @AdditionalParameter){
+             $("#ParameterValueRow").css("display", "flex");
+             $("#ParameterSoftwareValueRow").css("display", "flex");
+             $("#ParameterUserCategoryValueRow").css("display", "flex");
+             $("#ParameterPriceRow").css("display", "none");
+              $("#ParameterName").val("");
+            
+        }
+        if (categoryvalue == @CouponCode) {
+             $("#ParameterValueRow").css("display", "none");
+             $("#ParameterSoftwareValueRow").css("display", "none");
+             $("#ParameterUserCategoryValueRow").css("display", "none");
+             $("#ParameterPriceRow").css("display", "flex");
+             $("#ParameterNameRow").css("display", "flex");
+             $("#ParamaterLabelName").text("Coupon Code");
+            $("#ParamaterPriceLabelName").text("Discount(%)");
+            $("#txtQty").attr("pattern","^100$|^100.00$|^\\d{0,2}(\\.\\d{0,2})?$");
+             $("#ParameterName").val("");
+         }
+         else {
+             $("#ParamaterLabelName").text("Name");
+             $("#ParamaterPriceLabelName").text("Price");
+             $("#txtQty").attr("pattern", "^\\d*(\\.\\d{0,2})?$");
+         }
+    });
+</script>

@@ -1,0 +1,175 @@
+﻿
+@{
+    Layout = null;
+
+    int SoftwareMaya = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Maya;
+    int SoftwareArnold = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Arnold;
+    int SoftwareBlender = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Blender;
+    int SoftwareCinema4D = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Cinema4D;
+
+    int SoftwareClarisse = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Clarisse;
+    int SoftwareNuke = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Nuke;
+    int SoftwareOthers = (int)RendERA.Infrastructure.Enum.RenderaSoftware.Others;
+    int SoftwareThreeDmax = (int)RendERA.Infrastructure.Enum.RenderaSoftware.ThreeDMax;
+    int SoftwareVr = (int)RendERA.Infrastructure.Enum.RenderaSoftware.VR;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--robot font family-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
+    <!--bootstrap file -->
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css">
+    <!--font-awesome file-->
+    <link rel="stylesheet" type="text/css" href="/font/css/font-awesome.min.css">
+    <!--css file-->
+    <link rel="stylesheet" type="text/css" href="~/css/LayoutUser.css">
+</head>
+<body>
+    <div id="container-fluid menu" style="padding:10px;   background: #1c1e21">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="/images/download.svg" width="220">
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+
+        <div class="registration">
+            <p class="text-center">
+                Registration successful!<br>
+                You've got $22 coupon.Please select your rendering software, then you can get another $5 coupon.
+            </p>
+            <form action="UserWelcome" method="post">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper box-wrapper1">
+                            <img src="/images/maya.png" class="img-logo img-responsive">
+                            <img src="/images/download.png" class="tick-logo tick-logo1">
+                            <input type="checkbox" value="@SoftwareMaya" name="RenderSoftware" />
+                            <span>Maya</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper box-wrapper2">
+                            <img src="/images/max.png" class="img-logo img-responsive">
+                            <img src="/images/download.png" class="tick-logo tick-logo2">
+                            <input type="checkbox" value="@SoftwareThreeDmax" name="RenderSoftware" />
+                            <span>3ds Maxs</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper box-wrapper3">
+                            <img src="/images/Arnold-standalone.png" class="img-logo img-responsive">
+                            <img src="/images/download.png" class="tick-logo tick-logo3">
+                            <input type="checkbox" value="@SoftwareArnold" name="RenderSoftware" />
+                            <span>Arnold Standalone</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper box-wrapper4">
+                            <img src="/images/cinema-4D.png" class="img-logo img-responsive">
+                            <img src="/images/download.png" class="tick-logo tick-logo4">
+                            <input type="checkbox" value="@SoftwareCinema4D" name="RenderSoftware" />
+                            <span>Cinema 4D</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper box-wrapper5">
+                            <img src="/images/blender.png" class="img-logo img-responsive">
+                            <img src="/images/download.png" class="tick-logo tick-logo5">
+                            <input type="checkbox" value="@SoftwareBlender" name="RenderSoftware" />
+                            <span>Blender</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper box-wrapper6">
+                            <img src="/images/vray.png" class="img-logo img-responsive">
+                            <img src="/images/download.png" class="tick-logo tick-logo6 ">
+                            <input type="checkbox" value="@SoftwareVr" name="RenderSoftware" />
+                            <span>VR Standalone</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper box-wrapper7">
+                            <img src="/images/clarisse.png" class="img-logo img-responsive">
+                            <img src="/images/download.png" class="tick-logo tick-logo7">
+                            <input type="checkbox" value="@SoftwareClarisse" name="RenderSoftware" />
+                            <span>Clarisse</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper box-wrapper8">
+                            <img src="/images/nuke.png" class="img-logo img-responsive">
+                            <img src="/images/download.png" class="tick-logo tick-logo8">
+                            <input type="checkbox" value="@SoftwareNuke" name="RenderSoftware" />
+                            <span>Nuke</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="box-wrapper">
+                            <input type="checkbox" value="@SoftwareOthers" name="RenderSoftware" />
+                            <h3>Others</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-success" style="margin: 40px 0;">Start to Render</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<!-- jquery file-->
+<script type="text/javascript" src="~/js/jquery-3.3.1.min.js"></script>
+<!-- javascript file-->
+<script type="text/javascript" src="~/js/bootstrap/js/bootstrap.min.js"></script>
+
+
+<!--coustem javascript file-->
+<script type="text/javascript" src="~/js/LayoutUser.js"></script>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $(".box-wrapper").click(function () {
+            $(this).find(".tick-logo").show();
+        });
+    });
+
+    $(".box-wrapper").click(function () {
+        $(this).find(".tick-logo").show();
+    });
+
+
+    $(".box-wrapper").mouseleave(function () {
+        $(this).find(".tick-logo").hide();
+    });
+
+</script>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<RendERA.DB.ViewModels.DocumentVM>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Tracking ID
+                        </th>
+                        <th>
+                            Uploaded On
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>Download</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr >
+                            <td  onclick="TrackingDetail('@item.TrackingId',@item.Id);"  >
+                                <a href="#" onclick="TrackingDetail('@item.TrackingId',@item.Id);" >  @Html.DisplayFor(modelItem => item.TrackingId)</a>
+                            </td>
+                            <td  onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                                @item.DatePosted.ToString("MM/dd/yyyy hh:mm tt")
+                            </td>
+                            <td  onclick="TrackingDetail('@item.TrackingId',@item.Id);">
+                                @RendERA.Infrastructure.Enum.GetEnumDescription((RendERA.Infrastructure.Enum.JobTrackingStatus)item.status)
+                            </td>
+                            <td>
+                                <a asp-action="AssetsDownload" asp-controller="Documents" asp-route-filename="@item.FileUploadUrl">Source file</a>
+                                @if (item.FileDownloadUrl != null)
+                                {@Html.Raw("|");
+                                <a asp-action="AssetsDownload" asp-controller="Documents" asp-route-filename="@item.FileDownloadUrl">Procced file</a>
+                            }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </table>

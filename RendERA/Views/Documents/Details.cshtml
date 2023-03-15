@@ -1,0 +1,61 @@
+﻿@model RendERA.DB.ViewModels.DocumentVM
+@{
+    ViewData["Title"] = "Details";
+    @if (ViewBag.usertype == (int)RendERA.Infrastructure.Enum.UserType.Partner)
+    {
+        Layout = "~/Views/Shared/_LayoutPartner.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+
+}
+<div class="content js-content">
+    <div style="padding:3%" class="content_item">
+        <h2 style="color:forestgreen">Document Details</h2>
+
+        <div>
+            <hr />
+            <br />
+            <dl class="row">
+                <dt class="col-sm-2" style="color:forestgreen">
+                    Document Name
+                </dt>
+                <dd class="col-sm-10">
+                    Job-@Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-sm-2"style="color:forestgreen">
+                    Source file
+                </dt>
+                <dd class="col-sm-10">
+                    <a style="color:forestgreen" asp-action="AdminDetailsDownload" asp-route-filename="@Model.FileUploadUrl">Download</a>
+                </dd>
+                @if (Model.FileDownloadUrl != null)
+                {
+                    <dt class="col-sm-2" style="color:forestgreen">
+                        Procced file
+                    </dt>
+                    <dd class="col-sm-10">
+                        <a style="color:forestgreen"  asp-action="AdminDetailsDownload" asp-route-filename="@Model.FileDownloadUrl">Download</a>
+                    </dd>
+                }
+                <dt class="col-sm-2" style="color:forestgreen">
+                    Uploaded By
+                </dt>
+                <dd class="col-sm-10" style="color:forestgreen">
+                    @Html.DisplayFor(model => model.UploadedByName)
+                </dd>
+                <dt class="col-sm-2" style="color:forestgreen">
+                    Posted Date
+                </dt>
+                <dd class="col-sm-10" style="color:forestgreen">
+                    @Model.DatePosted.ToString("MM/dd/yyyy hh:mm tt")
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a style="color:forestgreen"  asp-action="DocumentList">Back to List</a>
+        </div>
+    </div>
+</div>

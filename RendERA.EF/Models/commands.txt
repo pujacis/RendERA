@@ -1,0 +1,2 @@
+﻿Scaffold-DbContext "Server=SQL12-16-LATEST\SQL2016;Database=RendERA;User ID=yteamdev;Password=YTeam@2017;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -F
+ 

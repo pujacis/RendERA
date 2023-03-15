@@ -1,0 +1,132 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@@{
+    Layout = null;
+}
+@model RendERA.DB.ViewModels.AdditionalParameterVM
+<style>
+    /*.common__control {
+        position: relative;
+        width: 100%;
+    }*/
+
+    option {
+        color: black;
+    }
+
+    .common__control-description, .common__control label {
+        color: #b0b0b0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .common__control label {
+        padding-left: 8%;
+        border-left: 2px solid transparent;
+        cursor: text;
+        left: 1rem;
+        margin: 0;
+        position: absolute;
+        top: 1rem;
+        transition: font-size .15s linear,top .15s linear;
+        user-select: none;
+        width: calc(100% - 2rem);
+        z-index: 4;
+    }
+
+    .common__control input.filled ~ label, .common__control input:focus ~ label {
+        font-size: .75rem;
+        top: .5rem;
+    }
+
+
+    .common__control input.filled ~ label, .common__control input:focus ~ label {
+        font-size: .75rem;
+        top: .5rem;
+    }
+
+    .common__control-description, .common__control label {
+        color: #b0b0b0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .common__control label {
+        border-left: 2px solid transparent;
+        cursor: text;
+        left: 1rem;
+        margin: 0;
+        position: absolute;
+        top: 1rem;
+        transition: font-size .15s linear,top .15s linear;
+        user-select: none;
+        width: calc(100% - 2rem);
+        z-index: 4;
+    }
+
+    .filled {
+        width: 100%;
+        height: 50px;
+    }
+</style>
+<span style="color:red" id="warningMsg"></span>
+<div class="modal-header" style=" background: #3f4041;">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Select parameter</h4>
+</div>
+<div class="modal-body " style="padding: 0 56px;background: #3f4041;">
+    <form asp-controller="Parameters" asp-action="SetParameter" method="post" class="form-horizontal" role="form" id="submitfrom">
+        <fieldset class="form-group" style="padding:8px;color:white">
+            <input id="DocumentIdoFadditionalPara" asp-for="DocumentId" hidden />
+
+            @{var i = -1; }
+            @foreach (var m in Model.InputFields)
+            {
+                i = i + 1;
+                <div class="form-group row" id="ParameterPriceRow">
+                    <input asp-for="InputFields[i].Id" hidden />
+                    <input asp-for="InputFields[i].LabelName" hidden />
+                    <label class="col-sm-4 control-label">@m.LabelName</label>
+                    <div class="col-sm-4">
+                        <input style="width:100%" asp-for="InputFields[i].Value" class="form-control" />
+                    </div>
+                </div>
+            }
+
+            @{var j = -1; }
+            @foreach (var m in Model.DropDownFields)
+            {
+                j = j + 1;
+                <div class="form-group row" id="ParameterPriceRow">
+                    <label class="col-sm-4 control-label">@m.LabelName</label>
+                    <input asp-for="DropDownFields[j].LabelName" hidden />
+                    <div class="col-sm-4">
+                        <select style="width:100%" class="form-control" asp-for="DropDownFields[j].Seletedvalue">
+                            @foreach (var n in m.DropDownOptionList)
+                            {
+                                <option value="@n.Id">@n.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            }
+        </fieldset>
+    </form>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <button type="button" id="submitfrombutton" class="btn btn-default" data-toggle="modal" data-target="#toModal">Continue</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

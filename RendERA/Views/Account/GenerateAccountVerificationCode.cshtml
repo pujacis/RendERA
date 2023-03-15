@@ -1,0 +1,20 @@
+﻿@model RendERA.DB.ViewModels.GenerateAccountVerificationCodeVM
+@{
+
+    Layout = "_LayoutOutside";
+}
+<form method="post" action="AccountCodeVerification">
+    <h1>Activation Code @Html.DisplayFor(item => item.Code) </h1>
+    <div class="formContainer">
+        <div class="formDiv" style="transition-delay: 0.2s">
+            <p>ENTER CODE     </p>
+            <input type="hidden" name="UserId" asp-for="UserId" />
+            <input type="password" required name="Code" /><a class="forgotPas" href="#">RESEND IT TO MY EMAIL</a>
+        </div>
+        <div class="formDiv" style="transition-delay: 0.6s">
+            <button class="acceptBtn" type="submit">Apply</button>
+            <p>@TempData["Errmsg"]</p>
+        </div>
+    </div>
+</form>
+

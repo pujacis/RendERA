@@ -1,0 +1,501 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@@{
+    Layout = null;
+}
+@model RendERA.DB.ViewModels.DocParametersMapVM
+<style>
+    /*.common__control {
+        position: relative;
+        width: 100%;
+    }*/
+    .common__control-description, .common__control label {
+        color: #b0b0b0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .common__control label {
+        padding-left: 8%;
+        border-left: 2px solid transparent;
+        cursor: text;
+        left: 1rem;
+        margin: 0;
+        position: absolute;
+        top: 1rem;
+        transition: font-size .15s linear,top .15s linear;
+        user-select: none;
+        width: calc(100% - 2rem);
+        z-index: 4;
+    }
+
+    .common__control input.filled ~ label, .common__control input:focus ~ label {
+        font-size: .75rem;
+        top: .5rem;
+    }
+
+
+    .common__control input.filled ~ label, .common__control input:focus ~ label {
+        font-size: .75rem;
+        top: .5rem;
+    }
+
+    .common__control-description, .common__control label {
+        color: #b0b0b0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .common__control label {
+        border-left: 2px solid transparent;
+        cursor: text;
+        left: 1rem;
+        margin: 0;
+        position: absolute;
+        top: 1rem;
+        transition: font-size .15s linear,top .15s linear;
+        user-select: none;
+        width: calc(100% - 2rem);
+        z-index: 4;
+    }
+
+    .filled {
+        width: 100%;
+        height: 50px;
+    }
+
+    input {
+        color: black;
+    }
+
+    label {
+        color: black;
+    }
+
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background-color: #3f4041;
+        opacity: 1;
+    }
+</style>
+
+<div class="modal-header" style=" background: #3f4041;">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Cost Calculator</h4>
+</div>
+<div class="modal-body " style="padding: 0 56px;background: #3f4041;">
+    <span style="color:red" id="warningMsg"></span>
+    <form asp-controller="Parameters" asp-action="SetParameter" method="post" class="form-horizontal" role="form" id="submitParametersfrom">
+        <fieldset class="form-group" style="padding:4px;color:white">
+            <input id="Amount" asp-for="Amount" hidden />
+            <input id="DocumentId" asp-for="DocumentId" hidden />
+            <input id="SelectedPriceOfCPU" asp-for="SelectedPriceOfCPU" hidden />
+            <input id="TotalRenderTimeInSec" asp-for="TotalRenderTimeInSec" hidden />
+            <input id="PriceOfRenderTimePerSec" asp-for="PriceOfRenderTimePerSec" hidden />
+            <input id="PriceOfPerNodeForProjectRender" asp-for="PriceOfPerNodeForProjectRender" hidden />
+            <input type="checkbox" id="IsSubmitted" asp-for="IsSubmitted" hidden />
+            <input id="TrancationId" asp-for="TransactionId" hidden />
+            <input id="Transaction_CouponCode" asp-for="Transaction.CouponCode" hidden />
+            <input id="Transaction_CouponId" asp-for="Transaction.CouponId" hidden />
+            <input id="Transaction_CreatedDate" asp-for="Transaction.CreatedDate" hidden />
+            <input id="Transaction_DocumentId" asp-for="Transaction.DocumentId" hidden />
+            <input id="Transaction_PayableAmount" asp-for="Transaction.PayableAmount" hidden />
+            <input id="Transaction_PaymentId" asp-for="Transaction.PaymentId" hidden />
+            <input id="Transaction_PercentOff" asp-for="Transaction.PercentOff" hidden />
+            <input id="Transaction_ReturnStatus" asp-for="Transaction.ReturnStatus" hidden />
+            <input id="Transaction_Stauts" asp-for="Transaction.Status" hidden />
+            <input id="Transaction_TotalAmount" asp-for="Transaction.TotalAmount" hidden />
+            <input id="Transaction_TransactionId" asp-for="Transaction.TransactionId" hidden />
+            <input id="Transaction_Id" asp-for="Transaction.Id" hidden />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 style="color:gray">Enter the model of your Processor</h4>
+                            @*<p></p>*@
+                        </div>
+                        <div class="col-md-4">
+                            <h4 style="color:gray">Number of Frame in the Project</h4>
+                            @*<p>Number of Frames = Duration * FPS</p>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-12 common__control">
+                            <select disabled onchange="SetDefault();" onpaste="this.onchange();" oninput="this.onchange();" id="Type_CPU" class="form-control filled" style="width:100%;" asp-for="SelectedCPU">
+                                <option value="0">Select</option>
+                                @foreach (var cpu in Model.CPUList)
+                                {
+                                    <option class="cpu" price="@cpu.Price" value="@cpu.Id">@cpu.Name</option>
+                                }
+
+                                @foreach (var cpu in Model.TwoXCPUList)
+                                {
+                                    <option class="2xcpu" price="@cpu.Price" value="@cpu.Id">@cpu.Name</option>
+                                }
+                            </select>
+                            <label style="font-size: .75rem; top: .5rem;" for="cost_frame_count">Brand</label>
+
+                        </div>
+                        <input disabled asp-for="Is2XCPU" onchange="SetDefault();" onpaste="this.onchange();" oninput="this.onchange();" style="margin-left: 18px;" type="checkbox" /><span>2XCPU</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-12 common__control">
+                            <select disabled onchange="SetDefault();" onpaste="this.onchange();" oninput="this.onchange();" title="Type" class="form-control filled" asp-for="SelectedProcessorModel">
+                                @foreach (var cpu in Model.ProcessorModelList)
+                                {
+                                    <option class="cpu" price="@cpu.Price" value="@cpu.Id">@cpu.Name</option>
+                                }
+                            </select>
+                            <label style="font-size: .75rem; top: .5rem;" for="cost_frame_count">Model</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 common__control">
+                            <select disabled onchange="SetDefault();" onpaste="this.onchange();" oninput="this.onchange();" title="Type" class="form-control filled" asp-for="SelectedProcessorType">
+                                @foreach (var cpu in Model.ProcessorTypeList)
+                                {
+                                    <option class="cpu" price="@cpu.Price" value="@cpu.Id">@cpu.Name</option>
+                                }
+                            </select>
+                            <label style="font-size: .75rem; top: .5rem;" for="cost_frame_count">Type</label>
+                        </div>
+
+                        @*</div>*@
+                        @*<select onchange="SetDefault();" onpaste="this.onchange();" oninput="this.onchange();" id="Type_CPU" class="form-control" asp-for="SelectedCPU">
+                                <option value="0">Select</option>
+                                @foreach (var cpu in Model.CPUList)
+                                {
+                                    <option class="cpu" price="@cpu.Price" value="@cpu.Id">@cpu.Name</option>
+                                }
+
+                                @foreach (var cpu in Model.TwoXCPUList)
+                                {
+                                    <option class="2xcpu" price="@cpu.Price" value="@cpu.Id">@cpu.Name</option>
+                                }
+                            </select>*@
+                        @*<select asp-for="" class="form-control"><option>intel</option><option>AMD</option></select>*@
+
+                    </div>
+                </div>
+                <div class="col-md-1">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+
+                        <div class="col-md-8 common__control">
+                            <input asp-for="NumberOfFrames" id="NumberOfFrames" disabled type="number" min="0" max="9999999999999" onchange="SetDefault();" onpaste="this.onchange();" oninput="validity.valid||(value='');" title="Number of frames" class="form-control filled">
+                            <label for="cost_frame_count">Number of frames</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <h4 style="color:gray">Rnder time of one frame on my computer</h4>
+                <div class="col-md-2 common__control">
+                    <input id="renderInHours" type="number" min="0" disabled max="999" title="hours" onchange="SetDefault();" onpaste="this.onchange();" oninput="validity.valid||(value='');" class="form-control filled">
+                    <label for="cost_frame_count">hours</label>
+                </div>
+                <div class="col-md-2 common__control">
+                    <input id="renderInMinutes" type="number" min="0" disabled max="60" title="minutes" onchange="SetDefault();" onpaste="this.onchange();" oninput="validity.valid||(value='');" class="form-control filled">
+                    <label for="cost_frame_count">minutes</label>
+                </div>
+                <div class="col-md-2 common__control">
+                    <input id="renderInSeconds" type="number" disabled min="0" max="60" title="second" onchange="SetDefault();" onpaste="this.onchange();" oninput="validity.valid||(value='');" class="form-control filled">
+                    <label for="cost_frame_count">second</label>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <h4 style="color:gray">Number of nodes for project rendering</h4>
+                <div class="col-md-8">
+                    <input id="slider" disabled type="range" min="0" max="200" step="1" class="form-control" oninput="sliderChange(this.value)">
+                </div>
+                <div class="col-md-4">
+                    <input asp-for="NumberOfNodeForProjectRender" disabled min="0" max="200" onchange="SilderValueChange(this.value)" oninput="validity.valid||(value='');" class="form-control" type="number" id="output" />
+                </div>
+
+
+            </div>
+            <br />
+            <h2 style="color:gray">Render time :</h2>
+            <p>On my Computer :<span id="RenderEra_nodes" style="color:green"></span></p>
+            <p>On <sapn id="output1"></sapn> RenderEra nodes, this will take :<span id="RenderEra_node_take_time" style="color:green"></span></p>
+            <br />
+
+            <div class="form-group">
+                <div class="row">
+                    <div style="float: right;margin: 0 20% 0 0 ;">
+                        <table>
+                            <tr><td><span>Cost of rendering </span></td><td> :<span id="price" style="color:aqua;margin:4px" disabled />$</td></tr>
+                            <tr class="couponPrice" style="display:none"><td style="direction: rtl;"><span> Coupon Applied </span></td><td> :<span id="CouponPersent" style="color:aqua;margin:4px" disabled />% Off</td></tr>
+                            <tr class="couponPrice" style="display:none"><td style="direction: rtl;"><span> Amount Pay </span></td><td> :<span id="AmountPaid" style="color:aqua;margin:4px" disabled />$</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+           
+        </fieldset>
+    </form>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-6">
+                @if (Model.IsParameter == true)
+                {
+                    @*<div id="paymentId" style=width:3%;></div>*@
+                    @*<button type="button" onclick="ProceedPayment(@Model.DocumentId)" class="btn btn-default">Payment</button>*@
+                }
+            </div>
+            <div class="col-md-6">
+                @*<button type="button" id="submitbutton" class="btn btn-default">Set Parameter</button>*@
+                <button type="button" onclick="backDetails(@Model.DocumentId)" class="btn btn-default">back</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var discount = 0;
+    var CouponApplied = false;
+    var CouponApplied = false;
+    $(document).on("click", "#CouponCodeButton", function (e) {
+
+        e.preventDefault();
+        var codeValue = $("#CouponCodeValue").val();
+
+        //   codeValue = codeValue.trim();
+        if (codeValue == null || codeValue == "") {
+            $("#CouponCodeMsg").text("Enter Coupon code");
+        }
+        else {
+            $.get(document.location.origin +"/Parameters/ValidateCouponCode?code=" + codeValue, function (data) {
+                if (data.status == "Success") {
+                    if (data.discount != 0) {
+                        if (CouponApplied == false) {
+                            discount = Number(data.discount);
+                            $("#CouponCodeMsg").text("valid");
+                            $("#Transaction_CouponCode").val(codeValue);
+                            $("#Transaction_PercentOff").val(discount);
+                            $("#Transaction_CouponId").val(Number(data.couponId));
+                            $("#CouponCodeButton").text("Applied");
+                            $("#CouponCodeValue").attr("disabled", true);
+                            CouponApplied = true;
+                            $(".couponPrice").css("display", "revert");
+                            SetDefault();
+                        }
+                        else {
+                            $("#CouponCodeMsg").text("Coupon already applied !");
+                        }
+                    }
+                    else {
+                        $("#CouponCodeMsg").text("Invalid");
+                        discount = Number(data.discount);
+                    }
+                }
+                else {
+                    $("#CouponCodeErrMsg").text("Invalid");
+                    discount = Number(data.discount);
+                }
+            });
+        }
+    });
+
+
+    $('#Is2XCPU').click(function () {
+        var val = $('#Is2XCPU').prop("checked");
+        if (val == true) {
+            $('.cpu').hide();
+            $('.2xcpu').show();
+            $("#Type_CPU").val(0).change();
+        }
+        if (val == false) {
+            $('.cpu').show();
+            $('.2xcpu').hide();
+            $("#Type_CPU").val(0).change();
+        }
+    });
+    $("#submitbutton").click(function () {
+        var price = 0;
+        var element = $("#Type_CPU").find('option:selected');
+        var selectedCPUPrice = element.attr("price");
+        if (selectedCPUPrice == undefined) {
+            $("#warningMsg").text("Please select CPU");
+            $("#price").text(0);
+            $("#Amount").val(0);
+            $("#AmountPaid").text(0);
+            return;
+        }
+        else {
+            $("#warningMsg").text("");
+        }
+        price = $("#Amount").val();
+
+        if (price == 0) {
+            $("#AmountPaid").text(0);
+            $("#warningMsg").text("Please select one of parameter");
+        }
+        else {
+            $("#warningMsg").text(" ");
+            $('#submitParametersfrom').submit();
+        }
+    });
+
+    $(document).ready(function () {
+        var price = 0;
+
+        var val = $('#Is2XCPU').prop("checked");
+        if (val == true) {
+            $('.cpu').hide();
+            $('.2xcpu').show();
+        }
+        if (val == false) {
+            $('.cpu').show();
+            $('.2xcpu').hide();
+        }
+
+    });
+
+    function backDetails(id) {
+
+        $.get(document.location.origin +'/Parameters/SetAdditionalParameter?id=' + id,
+            function (data) {
+                $('.bodydata').html(data);
+            });
+        jQuery.noConflict();
+        $("#myModal").modal("show");
+    }
+
+    function sliderChange(val) {
+        document.getElementById('output').value = val;
+        document.getElementById('output1').innerHTML = val;
+        SetDefault();
+    }
+
+    function SilderValueChange(val) {
+        document.getElementById('slider').value = val;
+        document.getElementById('output1').innerHTML = val;
+        SetDefault();
+    }
+
+    $("#slider").val($("#output").val());
+    $("#output1").text($("#output").val());
+    // document.getElementById('slider').value = document.getElementById('output').value;
+    var DocumentId = Number($("#DocumentId").val());
+    $("#Transaction_DocumentId").val(DocumentId);
+    var SelectedPriceOfCPU = Number($("#SelectedPriceOfCPU").val());
+    var TotalRenderTimeInSec = Number($("#TotalRenderTimeInSec").val());
+    var PriceOfRenderTimePerSec = Number($("#PriceOfRenderTimePerSec").val());
+    var PriceOfPerNodeForProjectRender = Number($("#PriceOfPerNodeForProjectRender").val());
+
+    function convertTime(sec) {
+        var hours = Math.floor(sec / 3600);
+        (hours >= 1) ? sec = sec - (hours * 3600) : hours = '00';
+        var min = Math.floor(sec / 60);
+        (min >= 1) ? sec = sec - (min * 60) : min = '00';
+        (sec < 1) ? sec = '00' : void 0;
+        (min.toString().length == 1) ? min = '0' + min : void 0;
+        (sec.toString().length == 1) ? sec = '0' + sec : void 0;
+        $("#renderInSeconds").val(sec);
+        $("#renderInMinutes").val(min);
+        $("#renderInHours").val(hours);
+        return hours + ':' + min + ':' + sec;
+    }
+    convertTime(TotalRenderTimeInSec);
+
+
+    function convertTimeForNode() {
+
+        var renderInSeconds = Number($("#renderInSeconds").val());
+        var renderInMinutes = Number($("#renderInMinutes").val());
+        var renderInHours = Number($("#renderInHours").val());
+        var Totalseconds = (renderInSeconds + (renderInMinutes * 60) + (renderInHours * 60 * 60));
+        var numberOfNode = $("#output").val();
+        var numberOfFrames = $("#NumberOfFrames").val();
+        var sec = (Totalseconds * Number(numberOfFrames)) / Number(Number(numberOfNode) / 2)
+        var hours = Math.floor(sec / 3600);
+        (hours >= 1) ? sec = sec - (hours * 3600) : hours = '00';
+        var min = Math.floor(sec / 60);
+        (min >= 1) ? sec = sec - (min * 60) : min = '00';
+        (sec < 1) ? sec = '00' : void 0;
+        (min.toString().length == 1) ? min = '0' + min : void 0;
+        (sec.toString().length == 1) ? sec = '0' + sec : void 0; ``
+        $("#RenderEra_node_take_time").text(" " + hours + " hours  " + min + " minutes  " + sec + " seconds");
+        return hours + ':' + min + ':' + sec;
+    }
+    convertTimeForNode();
+
+    function SetDefault() {
+        var amount = 0;
+        var element = $("#Type_CPU").find('option:selected');
+        var selectedCPUPrice = element.attr("price");
+        if (selectedCPUPrice == undefined) {
+            $("#paymentId").css("display", "none");
+            $("#warningMsg").text("Please select CPU");
+            $("#price").text(0);
+            $("#Amount").val(0);
+            $("#AmountPaid").text(0);
+            return;
+        }
+        else {
+            $("#warningMsg").text("");
+            $("#paymentId").css("display", "block");
+        }
+        $("#SelectedPriceOfCPU").val(selectedCPUPrice)
+        var numberOfFrames = Number($("#NumberOfFrames").val());
+        if (numberOfFrames == 0 || numberOfFrames == '0' || numberOfFrames == "") {
+            $("#paymentId").css("display", "none");
+            $("#warningMsg").text("Number of frame must be greater than zero");
+            $("#price").text(0);
+            $("#Amount").val(0);
+            $("#AmountPaid").text(0);
+            return;
+        }
+        else {
+            $("#warningMsg").text("");
+            $("#paymentId").css("display", "block");
+        }
+        var TotalSelectedPrice = Number(selectedCPUPrice) * Number(numberOfFrames);
+        renderInSeconds = Number($("#renderInSeconds").val());
+        renderInMinutes = Number($("#renderInMinutes").val());
+        renderInHours = Number($("#renderInHours").val());
+        var renderInSeconds = Number($("#renderInSeconds").val());
+        var renderInMinutes = Number($("#renderInMinutes").val());
+        var renderInHours = Number($("#renderInHours").val());
+
+        $("#RenderEra_nodes").text(" " + renderInHours + " hours  " + renderInMinutes + " minutes  " + renderInSeconds + " seconds");
+
+        var Totalseconds = (renderInSeconds + (renderInMinutes * 60) + (renderInHours * 60 * 60));
+        $("#TotalRenderTimeInSec").val(Totalseconds);
+        var totalRenderTimeInSec = Totalseconds * Number(PriceOfRenderTimePerSec);
+        var numberofNodes = Number($("#output").val());
+        var priceOfPerNodeForProjectRender = Number(PriceOfPerNodeForProjectRender) * numberofNodes;
+        amount = totalRenderTimeInSec + priceOfPerNodeForProjectRender + TotalSelectedPrice;
+        $("#Transaction_TotalAmount").val(Number(amount));
+        $("#price").text(amount.toFixed(2));
+        convertTimeForNode();
+        var amount1 = amount - amount * (Number(discount) / 100);
+        $("#AmountPaid").text(amount1.toFixed(2));
+        $("#CouponPersent").text(discount.toFixed(2));
+        $("#Amount").val(amount.toFixed(2));
+        if ($("#Amount").val() == 0 || $("#Amount").val() == 0.00 || $("#Amount").val() == '0') {
+            $("#paymentId").css("display", "none");
+        }
+        else {
+            $("#paymentId").css("display", "block");
+        }
+    }
+    SetDefault();
+</script>

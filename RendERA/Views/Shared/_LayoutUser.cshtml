@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>RendERA Farms</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--robot font family-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
+    <!--bootstrap file -->
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css">
+    <!--font-awesome file-->
+    <link rel="stylesheet" type="text/css" href="~/font/css/font-awesome.min.css">
+    <!--css file-->
+    <link rel="stylesheet" type="text/css" href="~/css/LayoutUser.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .content {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+    </style>
+    <script>
+
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+</head>
+
+
+
+
+
+
+<body>
+
+<script >
+			var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    /* Toggle between adding and removing the "active" class,
+    to highlight the button that controls the panel */
+    this.classList.toggle("active");
+
+    /* Toggle between hiding and showing the active panel */
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+
+</script>
+
+	<div id="web-wrapper">
+		<div id="container-fluid menu"style="padding: 23px 0 12px 17px;  background: #1c1e21;">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="row">
+						<div class="col-md-6">
+							<a asp-action="UserDashboard" asp-controller="Home" ><img src="/images/download.svg" width="160"></a>
+							</div>
+
+							<div class="col-md-6">
+								<div class="dropdown" id="dropdownlist">
+									<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Server CPU Registration Cores
+									<span class="caret"></span></button>
+									
+								  </div>
+							</div>
+					</div>
+
+
+				</div>
+				<div class="col-md-5 text-center">
+					<div class="search" type="text" placeholder="Search" aria-label="Search">
+						<svg width="15" height="15" viewBox="0 0 512 512">
+							@*<path fill="currentColor"  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>*@
+						</svg>
+					</div>
+					<div class="menu-center-item"><i class="fa fa-qrcode"></i><span>Scan your Qcode to track jobs</span></div>
+
+			</div>
+
+
+				<div class="col-md-4">
+                   <div class="menu-right-options">
+										 <button class="btn btn-default">Cost Calculator </button>
+					 					<i style="background: transparent;border: none; color: #e25c59;font-size: 22px;padding: 10px;"></i>
+					<button class="btn btn-default">Client Plugin Download</button>
+					<i class="fa fa-gift" style="background: transparent;border: none; color: #e25c59;font-size: 22px;padding: 10px;"></i>
+
+					<span class="fa"><svg width="18" height="18" viewBox="0 0 640 512">
+          <path d="M112,192a24,24,0,0,0-24-24H24a24,24,0,0,0,0,48H88A24,24,0,0,0,112,192ZM51.66,64.78l55.42,32a24,24,0,1,0,24-41.56l-55.42-32a24,24,0,1,0-24,41.56ZM520.94,100a23.8,23.8,0,0,0,12-3.22l55.42-32a24,24,0,0,0-24-41.56l-55.42,32a24,24,0,0,0,12,44.78ZM320,512a64,64,0,0,0,64-64H256A64,64,0,0,0,320,512ZM616,168H552a24,24,0,0,0,0,48h64a24,24,0,0,0,0-48ZM479.92,208c0-77.69-54.48-139.91-127.94-155.16V32a32,32,0,1,0-64,0V52.84C214.56,68.09,160.08,130.31,160.08,208c0,102.31-36.14,133.53-55.47,154.28A31.28,31.28,0,0,0,96,384c.11,16.41,13,32,32.09,32H511.91c19.11,0,32-15.59,32.09-32a31.23,31.23,0,0,0-8.61-21.72C516.06,341.53,479.92,310.31,479.92,208Z" fill="currentColor"></path>
+        </svg></span>
+
+
+
+					<i class="fa" type="button"  onclick="getTrackingNotification()" >?<style=width="35" height="35" viewBox="0 0 512 512"/></i>
+
+					<i class="fa"><svg width="16" height="17" viewBox="0 0 19 19">
+
+          <path d="M19 8.313v2.377l-3.173.61a6.54 6.54 0 01-.58 1.402l1.812 2.675-1.68 1.678-2.68-1.81a6.516 6.516 0 01-1.406.58L10.684 19h-2.37l-.61-3.17a6.575 6.575 0 01-1.404-.58l-2.68 1.81-1.68-1.68 1.81-2.674a6.63 6.63 0 01-.58-1.406L0 10.688V8.313L3.174 7.7c.137-.488.332-.96.58-1.403L1.94 3.62l1.68-1.678 2.676 1.81A6.56 6.56 0 017.7 3.174L8.312 0h2.377l.61 3.172a6.6 6.6 0 011.4.578l2.674-1.81 1.676 1.68-1.81 2.677c.25.443.443.914.58 1.404l3.18.62zM6.47 11.246a3.498 3.498 0 106.062-3.496 3.498 3.498 0 00-6.06 3.496z" fill="currentColor"></path>
+        </svg></i>
+
+					<span class="fa" onclick="window.location.assign(document.location.origin+'/account/logout');"><svg width="18" height="18" viewBox="0 0 512 512">
+          <path d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z" fill="currentColor"></path>
+        </svg></span>
+				   </div>
+				</div>
+			</div>
+		</div>
+		<div id="right-sidebar">
+			<ul class="right-nav-items">
+                <ul>
+                    <li id="assests"><a asp-action="Assets" asp-controller="Home"><i class="fa fa-briefcase"></i><p>Assets</p></a></li>
+                    <li id="new-job"><a asp-action="NewJob" asp-controller="Home"><i type="button" class="fa fa-bullhorn" data-toggle="modal" data-target="#myModal"></i> <p>New Job</p></a></li>
+                    <li id="render"><a asp-action="Render" asp-controller="Home"><i class="far fa fa-tachometer"></i><p>Render</p></a></li>
+
+                    @*<li><a asp-controller="Message" asp-action="UserMessageList"><i class="fa fa-envelope" aria-hidden="true"></i><p>Message</p></a></li>*@
+                    <li id="Documents"><a asp-controller="Documents" asp-action="UserDocumentGuide"><i class="fa fa-folder" aria-hidden="true"></i><p>Documents</p></a></li>
+
+                    
+
+                    <li id="Profile" style="margin-top: 100px;">
+                        <a asp-action="Profile" asp-controller="Home"><i class="far fa fa-user"></i><p>Profile</p></a>
+
+                    </li>
+                    <li id="Analytics">
+                        <a asp-action="Analytics" asp-controller="Home"><i class="fa fa-line-chart"></i><p>Analytics</p></a>
+                    </li>
+
+                    <li id="Statistics">
+                        <a asp-action="Statistics" asp-controller="Home"><i class="fa fa-bar-chart"></i><p>Statistics</p></a>
+                    </li>
+
+                    <li id="Payment">
+                        <a asp-action="Payment" asp-controller="Home"><i class="for fa fa-credit-card"></i><p>Payment</p></a>
+
+                    </li>
+
+                </ul>
+			</ul>
+		</div>
+
+</div>
+    <!-------------statistics end--------->
+    <div>
+        @RenderBody()
+    </div>
+
+
+
+
+</body><!-- jquery file-->
+<script type="text/javascript"src="~/js/jquery-3.3.1.min.js"></script>
+<!-- javascript file-->
+<script type="text/javascript"src="~/js/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--coustem javascript file-->
+<script type="text/javascript"src="~/js/LayoutUser.js"></script>
+
+<script>
+    function ServerList() {
+        $.ajax({
+        type: "GET",
+        url: document.location.origin+"/ServerLists/GetServerList",
+        data: {},
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+            success: function (result) {
+            var create = '<ul  class="dropdown-menu">';
+            $(result).each(function () {
+                create += ' <li><a href="#" value="' + this.ipAddress + '" >' + this.name + '</a></li>';
+            });
+            create += '</ul>';
+            jQuery('#dropdownlist').append(create);
+
+        },
+        error: function (response) {
+            alert('eror');
+        }
+       });
+    }
+    
+    ServerList();
+
+    function getTrackingNotification() {
+        $.get('/JobTracking/GetTrackingNotification',
+            function (data) {
+                $("#Trackingbodydata").html(data);
+            });
+        jQuery.noConflict();
+        $("#myNotificationModal").modal("show");
+    }
+</script>
+</html>

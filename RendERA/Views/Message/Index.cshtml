@@ -1,0 +1,297 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    @if (ViewBag.usertype == (int)RendERA.Infrastructure.Enum.UserType.Partner)
+    {
+        Layout = "~/Views/Shared/_LayoutPartner.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+
+}
+@model RendERA.DB.ViewModels.MessageReplyVM
+@using PagedList.Core.Mvc
+@using RendERA.Models.Pagination
+<link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
+<style>
+    .msgForm {
+        text-align: unset !important;
+    }
+</style>
+<!-- form row 1 -->
+<div class="content js-content">
+    <div class="content_item">
+        <div class="row">
+            <div class="col-12">
+                <div class="row-fluid">
+                    <!-- form  1 -->
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <p>
+                            @if (ViewBag.usertype == (int)RendERA.Infrastructure.Enum.UserType.Admin)
+                            {
+                                @Html.ActionLink("Create New Message ", "Create", "Message",null,new{ style="color:forestgreen" })
+                           
+
+                            }
+                        </p>
+                        <!-- start -->
+                        <div class=" -default">
+                            <div class="-heading">
+                                <h3 class="-title" style="color:forestgreen">
+                                    Messages
+
+                                </h3>
+                            </div>
+
+                            <div class="-body">
+
+                                <div class="form-horizontal container">
+
+                                    <div class="form-column col-lg-12 col-md-12 col-sm-12">
+
+                                        <div class="form-group">
+                                            @using (Html.BeginForm("DeleteMessage", "Message", FormMethod.Post, new { @id = "form-message-delete", @class = "form-horizontal container" }))
+                                            {
+                                                <div class="col-sm-12">
+
+                                                    <!-- table  -->
+                                                    <table id="table-message-reply" class="table table-condensed table-striped table-message-reply">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="color:forestgreen" class="tbl-subject">Subject</th>
+                                                                @*<th class="tbl-from">From</th>
+                                                                    <th class="tbl-from">To</th>*@
+                                                                <th style="color:forestgreen" class="tbl-date">Date Posted</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        @{ try
+                                                            {
+                                                                if (Model.Messages != null) { 
+                                                                    @foreach (var m in Model.Messages)
+                                                                {
+                                                                    string selectedRow = "";
+                                                                    if (m.Id == ViewBag.MessageId)
+                                                                    {
+                                                                        selectedRow = "success";
+                                                                    }
+                                                                    <tr class="@selectedRow">
+                                                                        <td>
+                                                                                <div class="text" style="color:forestgreen">@m.Subject</div>
+                                                                        </td>
+
+                                                                        @*<td>
+                                                                                <div class="text">@m.FromName</div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="text">@m.ToName</div>
+                                                                            </td>*@
+                                                                        <td>
+                                                                                <div class="text" style="color:forestgreen">@m.DatePosted.ToString("dd/MM/yyyy hh:mm tt")</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.ActionLink("Open", "Index",null, new { Id = m.Id , style="color:forestgreen" })
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="text edit">
+                                                                                @*@Html.ActionLink("Message", "Index", new { page = ViewBag.PageNumber })*@
+                                                                                @*<a class="delete" href="#" title="delete" onclick="messageDelete(@m.Id)"><img style="width: 17px; height: 15px" src="~/Images/no.png" /></a>*@
+                                                                            </div>
+                                                                        </td>
+                                                                        <td><input type="hidden" id="messageId" name="messageId" value="@m.Id"></td>
+                                                                    </tr>
+
+                                                                }
+                                                                }
+                                                            }
+                                                            catch
+                                                            {
+
+                                                            }
+
+                                                        }
+                                                    </table>
+                                                    @{
+                                                        int current = @ViewBag.PageNumber;
+                                                        int total = @ViewBag.TotalPages;
+                                                        int previous = 1;
+                                                        int next = 1;
+                                                        if (current != 1)
+                                                        {
+                                                            previous = current - 1;
+                                                        }
+                                                        if (current < total)
+                                                        {
+                                                            next = current + 1;
+                                                        }
+                                                    }
+                                                    <p style="color:forestgreen">Page @current of @total</p> <a href="/Message/Index?page=@previous" style="color:forestgreen">Previous</a> | <a href="/Message/Index?page=@next" style="color:forestgreen">Next</a>
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- end -->
+                        <!-- start -->
+                        @if (Model.Replies != null && ViewBag.MessageId != null)
+                        {
+                            <div class=" -default">
+                                <div class="-heading">
+                                    <h3 class="-title" style="color:forestgreen">
+                                        Replies for Message
+                                    </h3>
+                                </div>
+                                <div class="-body">
+
+                                    <div class="form-horizontal container">
+
+                                        <div class="form-column col-lg-12 col-md-12 col-sm-12">
+
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>
+
+                                                                <div class="form-group">
+                                                                    <span><b style="color:forestgreen">Message Details: </b></span>
+                                                                    @*@foreach (var item in Model.Replies)
+                                                                        {
+                                                                            if (item.MessageId == ViewBag.MessageId)
+                                                                            {
+
+                                                                                @item.MessageDetails
+                                                                            }
+                                                                        }*@
+
+
+
+                                                                    @try
+                                                                    {
+                                                                        @Model.Message.MessageToPost
+                                                                    }
+                                                                    catch { }
+
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-group">
+
+                                                                    @using (Html.BeginForm("ReplyMessage", "Message", new { id = "form-reply-message", messageId = @ViewBag.MessageId }, FormMethod.Post))
+                                                                    {
+
+                                                                        if (!ViewData.ModelState.IsValid)
+                                                                        {
+                                                                            <div class="row">
+                                                                                <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                                                                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                                                                    @Html.ValidationSummary(true)
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                        @Html.HiddenFor(model => model.Reply.MessageId);
+                                                                        <label class="col-sm-2 " style="color:forestgreen">Reply</label>
+                                                                        <div class="col-sm-9">
+                                                                            @Html.TextAreaFor(p => p.Reply.ReplyMessage, new { @rows = 2, @class = "form-control msgForm" })
+                                                                            @Html.ValidationMessageFor(model => model.Reply.ReplyMessage)
+
+                                                                        </div>
+                                                                        <div class="col-sm-1">
+                                                                            <input type="submit" class="btn btn-primary btn-success" value="Send" id="btn-reply-message">
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+
+                                                    <h4 style="color:forestgreen">Replies for the Message</h4>
+                                                    <table class="table">
+                                                        @foreach (var item in Model.Replies)
+                                                        {
+                                                            if (item.MessageId == ViewBag.MessageId)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <div>
+                                                                            <span><b style="color:forestgreen">From : </b>  </span>
+                                                                            @item.ReplyFrom <span style="font-size: smaller;color:forestgreen">@item.ReplyDateTime.ToString("dd/MM/yyyy hh:mm tt")</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span><b  style="color:forestgreen" >Message : </b></span>
+                                                                            <b  style="color:forestgreen" > @item.ReplyMessage</b>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                    </table>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- start -->
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="js-fake-scroll"></div>
+<script>
+
+    function messageDelete(index) {
+        bootbox.dialog({
+            message: "Are you sure you want to delete the message ?",
+            title: "",
+            buttons: {
+                success: {
+                    label: "Continue",
+                    className: "btn-success",
+                    callback: function deletemember() {
+                        $('#messageId').val(index);
+                        $('form#form-message-delete').submit();
+                    },
+                    danger: {
+                        label: "Cancel",
+                        className: "btn-danger",
+                        callback: function () {
+                            bootbox.hideAll();
+                        }
+                    }
+                }
+            }
+        });
+
+    };
+</script>
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Msg");
+            };
+    </script>
+}

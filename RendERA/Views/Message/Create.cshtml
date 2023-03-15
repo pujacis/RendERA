@@ -1,0 +1,72 @@
+﻿@model RendERA.DB.ViewModels.MessageReplyVM
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .msgForm {
+    text-align: unset !important;
+}
+</style>
+<div class="content js-content">
+    <div class="content_item">
+        <div class="row">
+            <div class="col-12">
+                <div class="row-fluid">
+                    <!-- form panel 1 -->
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <!-- panel start-->
+                        <div class="panel panel-default top">
+                            <div class="panel-heading suc">
+                                <h3 class="panel-title active " style="color:forestgreen">
+                                    Post New Message
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- end panel-->
+                        <div class="panel-body">
+                            <div class="form-horizontal container">
+                                @using (Html.BeginForm("PostMessage", "Message", FormMethod.Post, new { @id = "form-post-message", @class = "form-horizontal" }))
+                                {
+                                    <div class="form-column col-lg-12 col-md-12 col-sm-12">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">To</label>
+                                            <div class="col-sm-8">
+
+                                                <select asp-for="SelectedUserId" asp-items="@Model.UsersByType"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" style="color:forestgreen">Subject</label>
+                                            <div class="col-sm-8">
+
+                                                @Html.TextBoxFor(p => p.Message.Subject,new { @class = "msgForm" })
+                                                @Html.ValidationMessageFor(model => model.Message.Subject)
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" style="color:forestgreen">Message</label>
+                                            <div class="col-sm-8">
+                                                @Html.TextAreaFor(p => p.Message.MessageToPost, new { @rows = 8, @class = "form-control msgForm" })
+                                                @Html.ValidationMessageFor(model => model.Message.MessageToPost)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label"></label>
+                                            <div class="col-sm-8">
+                                                <input type="submit" class="btn btn-primary right" value="Send">
+                                            </div>
+                                        </div>
+                                    </div>
+                                 }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="js-fake-scroll"></div>
