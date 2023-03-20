@@ -290,7 +290,7 @@
             $("#CouponCodeMsg").text("Enter Coupon code");
         }
         else {
-            $.get(document.location.origin +"/Parameters/ValidateCouponCode?code="+codeValue, function(data){
+            $.get("@Url.Action("ValidateCouponCode","Parameters")?code=" + codeValue, function (data) {
             if (data.status == "Success") {
                 if (data.discount > 0) {
                     if (CouponApplied == false) {
@@ -378,7 +378,7 @@
 
     function backDetails(id) {
         
-        $.get(document.location.origin +'/Parameters/SetAdditionalParameter?id=' + id,
+        $.get('@Url.Action("SetAdditionalParameter","Parameters")?id=' + id,
                 function (data) {
                     $('.bodydata').html(data);
                 });

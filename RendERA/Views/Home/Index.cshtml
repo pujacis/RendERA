@@ -14,32 +14,40 @@
             </tr>
         </thead>
         <tr>
-            <td><a href="/Account/Register" target="_blank">Register a User</a></td>
+            @*<td><a href="/Account/Register" target="_blank">Register a User</a></td>*@
+            <td> @Html.ActionLink("Register a User", "Register", "Account")</td>
         </tr>
         <tr>
-            <td><a href="/Account/RegisterPartner" target="_blank">Register a Partner</a></td>
+          @*  <td><a href="/Account/RegisterPartner" target="_blank">Register a Partner</a></td>*@
+            <td> @Html.ActionLink("Register a Partner", "RegisterPartner", "Account")</td>
         </tr>
         <tr>
-            <td><a href="/Account/RegisterAdmin" target="_blank">Register a Admin</a></td>
+           @* <td><a href="/Account/RegisterAdmin" target="_blank">Register a Admin</a></td>*@
+            <td> @Html.ActionLink("Register a Admin", "RegisterAdmin", "Account")</td>
         </tr>
         <tr><td> <hr /></td> </tr>
         <tr>
-            <td><a href="/Account/Login" target="_blank">Login</a></td>
+           @* <td><a href="/Account/Login" target="_blank">Login</a></td>*@
+            <td> @Html.ActionLink("Login", "Login", "Account")</td>
         </tr>
 
 
         <tr><td> <hr /></td> </tr>
         <tr>
-            <td><a href="/Account/UserWelcome" target="_blank">   User Welcome Screen</a></td>
+           @* <td><a href="/Account/UserWelcome" target="_blank">   User Welcome Screen</a></td>*@
+            <td> @Html.ActionLink("User Welcome Screen", "UserWelcome", "Account")</td>
         </tr>
         <tr>
-            <td><a href="/Home/UserDashboard" target="_blank">   User Dashboard</a></td>
+           @* <td><a href="/Home/UserDashboard" target="_blank">   User Dashboard</a></td>*@
+            <td> @Html.ActionLink("User Dashboard", "UserDashboard", "Account")</td>
         </tr>
         <tr>
-            <td><a href="/Home/PartnerDashboard" target="_blank">   Partner Dashboard </a></td>
+          @*  <td><a href="/Home/PartnerDashboard" target="_blank">   Partner Dashboard </a></td>*@
+            <td> @Html.ActionLink(" Partner Dashboard", "PartnerDashboard", "Account")</td>
         </tr>
         <tr>
-            <td><a href="/Home/AdminDashboard" target="_blank">  Admin Dashboard</a></td>
+           @* <td><a href="/Home/AdminDashboard" target="_blank">  Admin Dashboard</a></td>*@
+            <td> @Html.ActionLink(" Admin Dashboard", "AdminDashboard", "Account")</td>
         </tr>
         <tr><td>&nbsp;</td> </tr>
 

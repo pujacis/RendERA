@@ -150,7 +150,7 @@
     });
     function Edit(id) {
         $("#CreateModal").css("display", "block")
-        $.get('Projects/EditProject?id=' + id,
+        $.get('@Url.Action("EditProject","Projects")?id=' + id,
             function (data) {
                 $("#CreateModal").html(data);
             });
@@ -158,7 +158,7 @@
     function Add() {
         $("#CreateModal").css("display", "block");
         $(".Addbutton").css("display", "none");
-        $.get('Projects/CreateProject',
+        $.get('@Url.Action("CreateProject","Projects")',
             function (data) {
                 $('#CreateModal').html(data);
             });

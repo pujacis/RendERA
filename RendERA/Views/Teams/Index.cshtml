@@ -128,7 +128,7 @@
 
     function Edit(id) {
         $("#CreateModal").css("display", "block")
-        $.get('Teams/EditTeam?id=' + id,
+        $.get('@Url.Action("EditTeam","Teams")?id=' + id,
             function (data) {
                 $("#CreateModal").html(data);
             });

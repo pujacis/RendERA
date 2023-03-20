@@ -156,7 +156,7 @@
     }
         function Edit(id) {
         $("#CreateModal").css("display", "block")
-        $.get('Parameters/EditParameter?id=' + id,
+        $.get('@Url.Action("EditParameter","Parameters")?id=' + id,
             function (data) {
                 $("#CreateModal").html(data);
             });
@@ -164,7 +164,7 @@
     function Add() {
         $("#CreateModal").css("display", "block");
         $(".Addbutton").css("display", "none");
-        $.get('Parameters/CreateParameter',
+        $.get('@Url.Action("CreateParameter","Parameters")',
             function (data) {
                 $('#CreateModal').html(data);
             });

@@ -222,7 +222,7 @@
     </script>*@
 <script>
     function TrackingDetail(trackingId,docId){
-        $.get(document.location.origin +'/JobTracking/GetTrackingDetails?trackingId=' + trackingId + '&docId=' + docId,
+        $.get('@Url.Action("GetTrackingDetails","JobTracking")?trackingId=' + trackingId + '&docId=' + docId,
             function (data) {
                 $('.bodydata').html(data);
             });
@@ -240,7 +240,7 @@
         }
         else {
               //window.location.assign('../../Parameters/AdditionalParameter?id=' + id);
-            $.get(document.location.origin +'/Parameters/SetAdditionalParameter?id=' + id,
+            $.get('@Url.Action("SetAdditionalParameter","Parameters")?id=' + id,
                 function (data) {
                     $('.bodydata').html(data);
                 });

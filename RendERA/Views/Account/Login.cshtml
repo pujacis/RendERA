@@ -193,7 +193,8 @@
 
         $("#forgetPassword").click(function () {
             var email = $("#ForgetemailId").val();
-            $.get(document.location.origin +"/Account/ForgetPassword?email=" + email +"&userType=3", function (data) {
+            //$.get(document.location.origin +"/Account/ForgetPassword?email=" + email +"&userType=3", function (data) {
+                $.get("@Url.Action("ForgetPassword","Account")?email=" + email + "&userType=3", function (data) {
                 $("#validate-status-forgetemail").text(data.message);
             });
         });

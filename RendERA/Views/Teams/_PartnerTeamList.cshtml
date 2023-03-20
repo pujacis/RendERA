@@ -5,17 +5,17 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Degination</th>
-            <th>Assign</th>
-            <th>Partner</th>
+            <th style="color:forestgreen">Name</th>
+            <th style="color:forestgreen">Degination</th>
+            <th style="color:forestgreen">Assign</th>
+            <th style="color:forestgreen">Partner</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var team in Model)
         {
         <tr>
-            <td>
+                <td style="color:forestgreen">
                 @if (team.ProfilePicture == null)
                 {
                     <img src="~/Images/User.jpg"
@@ -31,10 +31,10 @@
                          asp-append-version="true" />
                 }
                 @team.Name
-            </td>
-            <td>@team.Degination</td>
-            <td>@team.assignJobCount</td>
-            <td>@team.PartnerName</td>
+                </td style="color:forestgreen">
+            <td  style="color:forestgreen">@team.Degination</td>
+            <td  style="color:forestgreen">@team.assignJobCount</td>
+            <td  style="color:forestgreen">@team.PartnerName</td>
         </tr>
         }
     </tbody>

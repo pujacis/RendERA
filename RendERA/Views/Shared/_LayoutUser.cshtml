@@ -7,7 +7,7 @@
     <!--robot font family-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
     <!--bootstrap file -->
-    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/js/bootstrap/css/bootstrap.min.css">
     <!--font-awesome file-->
     <link rel="stylesheet" type="text/css" href="~/font/css/font-awesome.min.css">
     <!--css file-->
@@ -78,7 +78,7 @@ for (i = 0; i < acc.length; i++) {
 				<div class="col-md-3">
 					<div class="row">
 						<div class="col-md-6">
-							<a asp-action="UserDashboard" asp-controller="Home" ><img src="/images/download.svg" width="160"></a>
+							<a asp-action="UserDashboard" asp-controller="Home" ><img src="~/images/download.svg" width="160"></a>
 							</div>
 
 							<div class="col-md-6">
@@ -123,7 +123,8 @@ for (i = 0; i < acc.length; i++) {
           <path d="M19 8.313v2.377l-3.173.61a6.54 6.54 0 01-.58 1.402l1.812 2.675-1.68 1.678-2.68-1.81a6.516 6.516 0 01-1.406.58L10.684 19h-2.37l-.61-3.17a6.575 6.575 0 01-1.404-.58l-2.68 1.81-1.68-1.68 1.81-2.674a6.63 6.63 0 01-.58-1.406L0 10.688V8.313L3.174 7.7c.137-.488.332-.96.58-1.403L1.94 3.62l1.68-1.678 2.676 1.81A6.56 6.56 0 017.7 3.174L8.312 0h2.377l.61 3.172a6.6 6.6 0 011.4.578l2.674-1.81 1.676 1.68-1.81 2.677c.25.443.443.914.58 1.404l3.18.62zM6.47 11.246a3.498 3.498 0 106.062-3.496 3.498 3.498 0 00-6.06 3.496z" fill="currentColor"></path>
         </svg></i>
 
-					<span class="fa" onclick="window.location.assign(document.location.origin+'/account/logout');"><svg width="18" height="18" viewBox="0 0 512 512">
+                        <span class="fa" onclick="window.location.assign('@Url.Action("logout","account")');">
+                            <svg width="18" height="18" viewBox="0 0 512 512">
           <path d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z" fill="currentColor"></path>
         </svg></span>
 				   </div>
@@ -184,7 +185,7 @@ for (i = 0; i < acc.length; i++) {
     function ServerList() {
         $.ajax({
         type: "GET",
-        url: document.location.origin+"/ServerLists/GetServerList",
+            url: "@Url.Action("GetServerList","ServerLists")",
         data: {},
         contentType: "application/json;charset=utf-8",
         dataType: "json",
@@ -206,7 +207,7 @@ for (i = 0; i < acc.length; i++) {
     ServerList();
 
     function getTrackingNotification() {
-        $.get('/JobTracking/GetTrackingNotification',
+        $.get('@Url.Action("GetTrackingNotification","JobTracking")',
             function (data) {
                 $("#Trackingbodydata").html(data);
             });

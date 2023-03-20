@@ -139,7 +139,8 @@
         function softwareType(value) {
             $.ajax({
                 type: "GET",
-                url: "/Home/GetDocumentListBySoftwareType?id=" + value,
+                   
+            url: "@Url.Action("GetDocumentListBySoftwareType","Home")?id=" + value,
                 data: "{}",
                 success: function (data) {
                     var s = '';
@@ -186,7 +187,7 @@
 
         }
         else {
-            $.get(document.location.origin +'/Parameters/SetAdditionalParameter?id=' + id,
+            $.get('@Url.Action("SetAdditionalParameter","Parameters")?id=' + id,
                 function (data) {
                     $('.bodydata').html(data);
                 });

@@ -20,19 +20,19 @@
                 <div class="form-horizontal container">
                     <div class="form-column col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group row">
-                            <label class=" col-sm-2  control-label"> category & plugin</label>
+                        <label class=" col-sm-2  control-label" style="color:forestgreen"> category & plugin</label>
                             <div class="col-sm-4">
-                                <select style="height:27px" asp-for="Category" id="CategoryId" asp-items="@Model.CategoryList"></select>
+                            <select style="height:27px ;color:forestgreen" asp-for="Category" id="CategoryId" asp-items="@Model.CategoryList"></select>
                                 <span asp-validation-for="Category" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group row " id="ParameterUserCategoryValueRow" >
-                            <label class=" col-sm-2  control-label">User type :</label>
+                        <label class=" col-sm-2  control-label" style="color:forestgreen">User type :</label>
                              <div class="col-sm-10">
                                 @for (int i = 0; i < Model.UserCategoryList.Count(); i++)
                                 {
-                                    <input style="padding: 0 0" val="@Model.UserCategoryList[i].Id" class="list" asp-for="UserCategoryList[i].Selected" type="checkbox" />
-                                    <span style="padding: 0 25px 0 5px">@Model.UserCategoryList[i].Name</span>
+                                <input style="padding: 0 0;color:forestgreen" val="@Model.UserCategoryList[i].Id" class="list" asp-for="UserCategoryList[i].Selected" type="checkbox" />
+                                <span style="padding: 0 25px 0 5px;color:forestgreen">@Model.UserCategoryList[i].Name</span>
 
                                     <input asp-for="UserCategoryList[i].Name" hidden />
                                     <input asp-for="UserCategoryList[i].Id" hidden />
@@ -40,13 +40,13 @@
                             </div>
                         </div>
                         <div class="form-group row " id="ParameterSoftwareValueRow" >
-                            <label class=" col-sm-2  control-label">Render Software type:</label>
+                        <label class=" col-sm-2  control-label" style="color:forestgreen">Render Software type:</label>
                              <div class="col-sm-10">
                                 @for (int i = 0; i < Model.RenderSoftwareList.Count(); i++)
                                 {
 
-                                    <input style="padding: 0 0" val="@Model.RenderSoftwareList[i].Id" class="list" asp-for="RenderSoftwareList[i].Selected" type="checkbox" />
-                                    <span style="padding: 0 25px 0 5px">@Model.RenderSoftwareList[i].Name</span>
+                                <input style="padding: 0 0 ;color:forestgreen" val="@Model.RenderSoftwareList[i].Id" class="list" asp-for="RenderSoftwareList[i].Selected" type="checkbox" />
+                                <span style="padding: 0 25px 0 5px;color:forestgreen">@Model.RenderSoftwareList[i].Name</span>
 
                                     <input asp-for="RenderSoftwareList[i].Name" hidden />
                                     <input asp-for="RenderSoftwareList[i].Id" hidden />
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="form-group row" id="ParameterNameRow">
-                            <label id="ParamaterLabelName" class="col-sm-2 control-label">Name</label>
+                        <label id="ParamaterLabelName" class="col-sm-2 control-label" style="color:forestgreen">Name</label>
                             <div class="col-sm-4">
                                 <input asp-for="Name" type="text" id="ParameterName" class="msgForm" />
 
@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="form-group row" id="ParameterValueRow">
-                            <label class=" col-sm-2  control-label">Value (If any)</label>
+                        <label class=" col-sm-2  control-label" style="color:forestgreen">Value (If any)</label>
                             <div class="col-sm-4">
                                 <input asp-for="Value" type="text" class="msgForm" />
 
@@ -75,7 +75,7 @@
                         </div>
 
                         <div class="form-group row" id="ParameterPriceRow">
-                            <label asp-for="Price" id="ParamaterPriceLabelName" class="col-sm-2 control-label">Price</label>
+                        <label asp-for="Price" id="ParamaterPriceLabelName" style="color:forestgreen" class="col-sm-2 control-label">Price</label>
                             <div class="col-sm-4">
                                 <input asp-for="Price" pattern="^\d*(\.\d{0,2})?$" id="txtQty" class="msgForm" />
 
@@ -93,7 +93,7 @@
             </div>
         </form>
         <div>
-            <a asp-action="Index">Back to List</a>
+        <a style="color:forestgreen" asp-action="Index">Back to List</a>
         </div>
     </div>
 

@@ -117,7 +117,7 @@
                                                                     next = current + 1;
                                                                 }
                                                             }
-                                                            Page @current of @total <a href="/Message/UserMessageList?page=@previous">Previous</a> | <a href="/Message/UserMessageList?page=@next">Next</a>
+                                                            Page @current of @total <a href="@Url.Action("UserMessageList","Message")?page=@previous">Previous</a> | <a href="@Url.Action("UserMessageList","Message")?page=@next">Next</a>
                                                         </div>
                                                     }
                                                 </div>

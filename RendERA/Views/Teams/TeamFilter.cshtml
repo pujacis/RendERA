@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-md-2" >Select Partner</label>
+                        <label class="col-md-2"  style="color:forestgreen">Select Partner</label>
                         <select id="PartnerListChange" class="col-md-4  filled">
                             <option value="0"> Select </option>
                             @foreach (var obj in ViewBag.PartnerList)
@@ -63,7 +63,7 @@
 <script>
     function SubmitFilterForm() {
         var para = $("#PartnerListChange").val();
-        $.get('/Teams/PartnerTeamList?userId=' + para,
+        $.get('@Url.Action("PartnerTeamList","Teams")?userId=' + para,
             function (data) {
                 $("#PartnerTeamList").html(data);
             });

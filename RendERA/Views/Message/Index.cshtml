@@ -128,7 +128,7 @@
                                                             next = current + 1;
                                                         }
                                                     }
-                                                    <p style="color:forestgreen">Page @current of @total</p> <a href="/Message/Index?page=@previous" style="color:forestgreen">Previous</a> | <a href="/Message/Index?page=@next" style="color:forestgreen">Next</a>
+                                                    <p style="color:forestgreen">Page @current of @total</p>  <a href="@Url.Action("Index","Message")?page=@previous" style="color:forestgreen">Previous</a> | <a href="@Url.Action("Index","Message")?page=@next" style="color:forestgreen">Next</a>
                                                 </div>
                                             }
                                         </div>

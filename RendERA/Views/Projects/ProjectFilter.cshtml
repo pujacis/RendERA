@@ -63,7 +63,7 @@
 <script>
     function SubmitFilterForm() {
         var para = $("#PartnerListChange").val();
-        $.get('/Projects/PartnerProjectList?userId=' + para,
+        $.get('@Url.Action("PartnerProjectList","Projects")?userId=' + para,
             function (data) {
                 $("#PartnerTeamList").html(data);
             });

@@ -126,7 +126,7 @@
     });
     function Edit(id) {
         $("#CreateModal").css("display", "block")
-        $.get('MasterCategory/Edit?id=' + id,
+        $.get('@Url.Action("Edit","MasterCategory")?id=' + id,
             function (data) {
                 $("#CreateModal").html(data);
             });
@@ -134,7 +134,7 @@
     function Add() {
         $("#CreateModal").css("display", "block");
         $(".Addbutton").css("display", "none");
-        $.get('MasterCategory/Create',
+        $.get('@Url.Action("Create","MasterCategory"),
             function (data) {
                 $('#CreateModal').html(data);
             });
