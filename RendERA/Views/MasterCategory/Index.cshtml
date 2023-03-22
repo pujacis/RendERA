@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<RendERA.DB.ViewModels.MasterCategoryVM>
 @{
     ViewData["Title"] = "Index";
-    
-        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <style>
     .msgForm {
@@ -33,6 +33,7 @@
         -webkit-transition: all 0.3s ease-out;
     }
 </style>
+ <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <div class="content js-content">
     <div style="padding: 11px;width:100%;display:none" class="content_item" id="CreateModal">
     </div>
@@ -46,7 +47,7 @@
                     <th style="color:forestgreen">Name</th>
 
                     <th style="color:forestgreen">Edit</th>
-                        <th style="color:forestgreen">Delete</th>
+                    <th style="color:forestgreen">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,13 +55,13 @@
                 {
                     <tr>
                         <td style="color:forestgreen">
-                          
+
                             @team.Name
                         </td>
 
-                        <td><a style="color:forestgreen" id="@team.Id" onclick="Edit(this.id)">Edit</a></td>
-                            <td><a style="color:forestgreen" onclick="change(@team.Id)" data-toggle="modal" data-target="#toModal">Delete</a></td>
-                       
+                        <td><a id="@team.Id" onclick="Edit(this.id)" style="color:forestgreen">Edit</a></td>
+                        <td><a onclick="change(@team.Id)" data-toggle="modal" data-target="#toModal" style="color:forestgreen">Delete</a></td>
+
                     </tr>
                 }
             </tbody>
@@ -72,7 +73,7 @@
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header" style=" background: #3f4041">
+            <div class="modal-header" style=" background: #3f4041;color:forestgreen">
                 Are you want delete ?
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
@@ -102,8 +103,6 @@
                 <h4 class="modal-title">Select parameter</h4>
             </div>
             <div class="modal-body bodydata" style=" background: #3f4041;">
-
-
             </div>
 
         </div>
@@ -126,7 +125,7 @@
     });
     function Edit(id) {
         $("#CreateModal").css("display", "block")
-        $.get('@Url.Action("Edit","MasterCategory")?id=' + id,
+        $.get('MasterCategory/Edit?id=' + id,
             function (data) {
                 $("#CreateModal").html(data);
             });
@@ -134,7 +133,7 @@
     function Add() {
         $("#CreateModal").css("display", "block");
         $(".Addbutton").css("display", "none");
-        $.get('@Url.Action("Create","MasterCategory"),
+        $.get('MasterCategory/Create',
             function (data) {
                 $('#CreateModal').html(data);
             });
@@ -144,8 +143,8 @@
 @if (ViewBag.Msg != null)
 {
     <script type="text/javascript">
-            window.onload = function () {
-                alert("@ViewBag.Msg");
-            };
+        window.onload = function () {
+            alert("@ViewBag.Msg");
+        };
     </script>
 }

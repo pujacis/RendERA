@@ -32,7 +32,8 @@
         -webkit-transition: all 0.3s ease-out;
     }
 </style>
-<div class="content js-content">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<div class="content js-content" style="color:white">
     <div style="padding: 11px;width:100%;display:none" class="content_item" id="CreateModal">
     </div>
 
@@ -45,7 +46,7 @@
                     <th style="color:forestgreen">Server Name</th>
                     <th style="color:forestgreen">IP Address</th>
                     <th style="color:forestgreen">Edit</th>
-                    <th style="color:forestgreen">Delete</th>
+                    <th style="color:forestgreen"> Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,8 +57,8 @@
                             @serverList.Name
                         </td>
                         <td style="color:forestgreen">@serverList.IpAddress</td>
-                        <td style="color:forestgreen"><a id="@serverList.Id" onclick="Edit(this.id)">Edit</a></td>
-                        <td style="color:forestgreen"><a onclick="change(@serverList.Id)" data-toggle="modal" data-target="#toModal">Delete</a></td>
+                        <td><a id="@serverList.Id" onclick="Edit(this.id)" style="color:forestgreen">Edit</a></td>
+                        <td><a onclick="change(@serverList.Id)" data-toggle="modal" data-target="#toModal" style="color:forestgreen">Delete</a></td>
                     </tr>
                 }
             </tbody>
@@ -69,11 +70,11 @@
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header" style=" background: forestgreen" >
+            <div class="modal-header" style=" background: #3f4041;color:forestgreen">
                 Are you want delete ?
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body " style="background-color:#292929; height: 250px !important">
+            <div class="modal-body " style="background-color: #333; height: 250px !important">
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
@@ -94,13 +95,11 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header" style=" background: #292929;">
+            <div class="modal-header" style=" background: #3f4041;">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Select parameter</h4>
             </div>
-            <div class="modal-body bodydata" style=" background: forestgreen;">
-
-
+            <div class="modal-body bodydata" style=" background: #3f4041;">
             </div>
 
         </div>
@@ -123,8 +122,7 @@
     });
     function Edit(id) {
         $("#CreateModal").css("display", "block")
-
-        $.get('@Url.Action("Edit","ServerLists")?id=' + id,
+        $.get('ServerLists/Edit?id=' + id,
             function (data) {
                 $("#CreateModal").html(data);
             });
@@ -132,8 +130,7 @@
     function Add() {
         $("#CreateModal").css("display", "block");
         $(".Addbutton").css("display", "none");
-       
-        $.get('@Url.Action("CreateServerList","ServerLists"),
+        $.get('ServerLists/CreateServerList',
             function (data) {
                 $('#CreateModal').html(data);
             });
@@ -143,11 +140,10 @@
 @if (ViewBag.Msg != null)
 {
     <script type="text/javascript">
-            window.onload = function () {
-                alert("@ViewBag.Msg");
-            };
+        window.onload = function () {
+            alert("@ViewBag.Msg");
+        };
     </script>
 }
 
 
-                                                           
